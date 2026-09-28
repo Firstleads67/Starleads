@@ -1,0 +1,3572 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Partner worden | Installateurs leads</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@900&display=swap" rel="stylesheet">
+  <meta name="description" content="Word partner van Starleads.nl. Ontvang exclusieve, vooraf gekwalificeerde afspraken. 3-5 afspraken per week. 100% no cure no pay." />
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <style>
+/* ===== NAVBAR ===== */
+    .navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      background: var(--white);
+      border-bottom: 1px solid transparent;
+      transition: border-color .3s, box-shadow .3s;
+      padding: 0 24px;
+    }
+
+    .navbar.scrolled {
+      border-color: var(--gray-200);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .navbar-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      gap: 40px;
+    }
+
+    .nav-logo {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--gray-900);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .nav-logo span { color: var(--green); }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      flex: 1;
+    }
+
+    .nav-links a {
+      font-size: .9rem;
+      font-weight: 500;
+      color: var(--brand-dark);
+      transition: color .2s;
+      white-space: nowrap;
+    }
+
+    .nav-links a:hover { color: var(--green); }
+
+    /* Dropdown nav */
+    .dropdown { position: relative; }
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+      padding: 24px;
+      gap: 32px;
+      min-width: 360px;
+      z-index: 1000;
+      border-top: 3px solid #00bf69;
+    }
+    .dropdown-menu.show { display: flex; animation: fadeInDown 0.15s ease; }
+    .dropdown.mobile-open .dropdown-menu { display: flex; }
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .dropdown-arrow {
+      display: inline-block;
+      font-size: .65rem;
+      transition: transform 0.2s ease;
+      margin-left: 2px;
+    }
+    .dropdown-arrow.open { transform: rotate(180deg); }
+    .dropdown-menu a { display: block; padding: 6px 0; font-size: .88rem; font-weight: 500; color: var(--gray-700); transition: color .15s; white-space: nowrap; text-decoration: none; }
+    .dropdown-menu a:hover { color: var(--green); }
+    .nav-dropdown-title { font-size: .7rem; font-weight: 700; color: var(--gray-400); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 8px; }
+    .nav-dropdown-grid { display: grid; grid-template-columns: 1fr 1fr; min-width: 320px; }
+
+    .nav-cta {
+      margin-left: auto;
+      flex-shrink: 0;
+    }
+
+    .btn-green {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--green);
+      color: var(--white);
+      font-size: .9rem;
+      font-weight: 600;
+      padding: 10px 20px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      transition: background .2s, transform .15s, box-shadow .2s;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .btn-green:hover {
+      background: var(--green-dark);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0,191,105,.35);
+    }
+
+    .btn-green:active { transform: translateY(0); }
+
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      color: var(--white);
+      font-size: 1rem;
+      font-weight: 600;
+      padding: 14px 28px;
+      border-radius: 10px;
+      border: 2px solid rgba(255,255,255,.5);
+      cursor: pointer;
+      transition: background .2s, border-color .2s;
+    }
+
+    .btn-outline:hover {
+      background: rgba(255,255,255,.1);
+      border-color: var(--white);
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      margin-left: auto;
+      padding: 4px;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--gray-700);
+      border-radius: 2px;
+      transition: .3s;
+    }
+
+    .mobile-menu {
+      display: none;
+      flex-direction: column;
+      background: var(--white);
+      border-top: 1px solid var(--gray-200);
+      padding: 16px 24px 24px;
+      gap: 4px;
+    }
+
+    .mobile-menu a {
+      padding: 10px 0;
+      font-size: .95rem;
+      font-weight: 500;
+      color: var(--gray-700);
+      border-bottom: 1px solid var(--gray-100);
+    }
+
+    .mobile-menu .btn-green {
+      margin-top: 12px;
+      justify-content: center;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green: #00bf69;
+      --green-dark: #00a85a;
+      --green-light: #ccf5e3;
+      --green-xlight: #e8faf2;
+      --brand-dark: #152e1a;
+      --brand-dark2: #1e3d26;
+      --gray-50: #f9fafb;
+      --gray-100: #f3f4f6;
+      --gray-200: #e5e7eb;
+      --gray-400: #9ca3af;
+      --gray-500: #6b7280;
+      --gray-700: #374151;
+      --gray-800: #1f2937;
+      --gray-900: #111827;
+      --white: #ffffff;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,.08);
+      --shadow: 0 4px 6px -1px rgba(0,0,0,.08);
+      --shadow-md: 0 10px 15px -3px rgba(0,0,0,.08);
+      --shadow-lg: 0 20px 25px -5px rgba(0,0,0,.08);
+      --radius: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 24px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      color: var(--gray-800);
+      background: var(--white);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ===== SECTION HELPERS ===== */
+    .section { padding: 88px 0; }
+    .section-gray { background: var(--gray-50); }
+
+    .section-header { text-align: center; margin-bottom: 56px; }
+    .section-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: .8rem;
+      font-weight: 700;
+      color: var(--green);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: 12px;
+    }
+    .section-tag::before, .section-tag::after {
+      content: '';
+      display: block;
+      width: 24px; height: 2px;
+      background: var(--green);
+      border-radius: 2px;
+    }
+    .section-title {
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      font-weight: 800;
+      color: var(--gray-900);
+      letter-spacing: -.02em;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .section-sub {
+      font-size: 1rem;
+      color: var(--gray-500);
+      max-width: 580px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* ===== CALCULATOR SECTION ===== */
+    .calc-hero {
+      padding: 108px 0 72px;
+      background: linear-gradient(135deg, var(--brand-dark) 0%, var(--brand-dark2) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .calc-hero::before {
+      content: '';
+      position: absolute;
+      top: -100px; right: -150px;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(0,191,105,.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .calc-hero-inner {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 64px;
+      align-items: center;
+    }
+
+    .calc-hero-text {}
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0,191,105,.2);
+      color: #00e87d;
+      font-size: .82rem;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 100px;
+      margin-bottom: 20px;
+      border: 1px solid rgba(0,191,105,.3);
+    }
+
+    .calc-hero-text h1 {
+      font-size: clamp(1.9rem, 3.5vw, 2.8rem);
+      font-weight: 800;
+      color: var(--white);
+      line-height: 1.15;
+      letter-spacing: -.02em;
+      margin-bottom: 18px;
+    }
+
+    .calc-hero-text h1 .hl { color: var(--green); }
+
+    .calc-hero-text p {
+      font-size: 1rem;
+      color: rgba(255,255,255,.72);
+      line-height: 1.7;
+      margin-bottom: 28px;
+      max-width: 460px;
+    }
+
+    .hero-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .hero-stat {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: .82rem;
+      font-weight: 600;
+      color: rgba(255,255,255,.85);
+      background: rgba(255,255,255,.08);
+      padding: 7px 14px;
+      border-radius: 100px;
+      border: 1px solid rgba(255,255,255,.15);
+    }
+
+    .hero-stat .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      flex-shrink: 0;
+    }
+
+    /* ===== CALCULATOR CARD ===== */
+    .calc-card {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-lg), 0 0 0 1px rgba(0,191,105,.06);
+      overflow: hidden;
+    }
+
+    .calc-progress-bar-wrap {
+      height: 5px;
+      background: var(--gray-100);
+    }
+
+    .calc-progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--green), #4ade80);
+      border-radius: 0 3px 3px 0;
+      transition: width .4s cubic-bezier(.4,0,.2,1);
+    }
+
+    .calc-top {
+      padding: 20px 28px 16px;
+      border-bottom: 1px solid var(--gray-100);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .calc-step-label {
+      font-size: .75rem;
+      font-weight: 700;
+      color: var(--green);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+
+    .calc-step-dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .calc-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--gray-200);
+      transition: background .3s;
+    }
+
+    .calc-dot.done { background: var(--green); }
+    .calc-dot.active {
+      background: var(--green);
+      box-shadow: 0 0 0 3px rgba(0,191,105,.2);
+    }
+
+    .calc-inner { padding: 28px; }
+
+    .calc-question {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--gray-900);
+      margin-bottom: 20px;
+      line-height: 1.4;
+    }
+
+    /* Choice tiles */
+    .choice-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    .choice-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+    .choice-grid.cols-6 { grid-template-columns: repeat(3, 1fr); }
+
+    .choice-tile {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      padding: 16px 12px;
+      border: 2px solid var(--gray-200);
+      border-radius: var(--radius);
+      cursor: pointer;
+      background: var(--white);
+      font-family: inherit;
+      transition: all .2s;
+      text-align: center;
+      min-height: 72px;
+    }
+
+    .choice-tile:hover {
+      border-color: var(--green);
+      background: var(--green-xlight);
+      transform: translateY(-1px);
+    }
+
+    .choice-tile.selected {
+      border-color: var(--green);
+      background: var(--green-xlight);
+      box-shadow: 0 0 0 3px rgba(0,191,105,.15);
+    }
+
+    .choice-tile-icon { font-size: 1.4rem; line-height: 1; }
+
+    .choice-tile-label {
+      font-size: .9rem;
+      font-weight: 700;
+      color: var(--gray-900);
+    }
+
+    .choice-tile-sub {
+      font-size: .75rem;
+      color: var(--gray-500);
+    }
+
+    .choice-tile.selected .choice-tile-label { color: var(--green-dark); }
+
+    /* Nav buttons */
+    .calc-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .btn-calc-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 11px 20px;
+      border-radius: 8px;
+      border: 1.5px solid var(--gray-200);
+      background: var(--white);
+      color: var(--gray-500);
+      font-size: .875rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all .2s;
+    }
+
+    .btn-calc-back:hover {
+      border-color: var(--gray-400);
+      color: var(--gray-700);
+    }
+
+    .btn-calc-next {
+      flex: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 13px 24px;
+      border-radius: 8px;
+      border: none;
+      background: var(--green);
+      color: var(--white);
+      font-size: .95rem;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all .2s;
+    }
+
+    .btn-calc-next:hover {
+      background: var(--green-dark);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 14px rgba(0,191,105,.35);
+    }
+
+    .btn-calc-next:disabled {
+      background: var(--gray-200);
+      color: var(--gray-400);
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    /* ===== RESULT STATE ===== */
+    .calc-result { padding: 28px; }
+
+    .result-header {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .result-eyebrow {
+      font-size: .78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: var(--green);
+      margin-bottom: 6px;
+    }
+
+    .result-title {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--gray-900);
+      letter-spacing: -.01em;
+    }
+
+    .result-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .result-card {
+      background: var(--green);
+      border-radius: var(--radius);
+      padding: 20px 14px;
+      text-align: center;
+    }
+
+    .result-card-label {
+      font-size: .75rem;
+      font-weight: 600;
+      color: rgba(255,255,255,.7);
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+
+    .result-card-val {
+      font-size: 1.7rem;
+      font-weight: 800;
+      color: var(--white);
+      line-height: 1;
+    }
+
+    .result-card-val.small { font-size: 1.3rem; }
+
+    .result-sub {
+      font-size: .85rem;
+      color: var(--gray-500);
+      text-align: center;
+      line-height: 1.6;
+      margin-bottom: 20px;
+      padding: 14px 16px;
+      background: var(--gray-50);
+      border-radius: 10px;
+      border-left: 3px solid var(--green);
+    }
+
+    .btn-result-cta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 15px;
+      background: var(--green);
+      color: var(--white);
+      font-size: 1rem;
+      font-weight: 700;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all .2s;
+      text-decoration: none;
+      margin-bottom: 12px;
+    }
+
+    .btn-result-cta:hover {
+      background: var(--green-dark);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(0,191,105,.4);
+    }
+
+    .btn-reset {
+      display: block;
+      text-align: center;
+      font-size: .82rem;
+      color: var(--gray-400);
+      cursor: pointer;
+      transition: color .2s;
+      background: none;
+      border: none;
+      font-family: inherit;
+      width: 100%;
+    }
+
+    .btn-reset:hover { color: var(--green); }
+
+    /* Extra result layout */
+    .result-cards-row2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 12px;
+      margin-bottom: 0;
+    }
+
+    .result-card.light {
+      background: var(--green-xlight);
+      border: 1px solid rgba(0,191,105,.2);
+    }
+
+    .result-card.light .result-card-label { color: var(--green-dark); }
+    .result-card.light .result-card-val   { color: var(--green-dark); }
+
+    .result-card.conv {
+      background: var(--gray-800);
+    }
+
+    .result-annual-block {
+      background: linear-gradient(135deg, var(--green-dark) 0%, #152e1a 100%);
+      border-radius: var(--radius);
+      padding: 22px 20px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 12px;
+      margin-bottom: 16px;
+    }
+
+    .annual-item { text-align: center; }
+
+    .annual-label {
+      font-size: .72rem;
+      font-weight: 700;
+      color: rgba(255,255,255,.6);
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      margin-bottom: 6px;
+    }
+
+    .annual-val {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--white);
+      line-height: 1;
+    }
+
+    .annual-divider {
+      width: 1px;
+      background: rgba(255,255,255,.15);
+      margin: 0 auto;
+      display: none;
+    }
+
+    .conversion-tip {
+      background: var(--gray-50);
+      border-left: 3px solid var(--green);
+      border-radius: 0 8px 8px 0;
+      padding: 10px 14px;
+      font-size: .8rem;
+      color: var(--gray-600);
+      line-height: 1.5;
+      margin-top: 10px;
+      margin-bottom: 0;
+    }
+
+    .result-card-sub {
+      font-size: .68rem;
+      color: rgba(255,255,255,.6);
+      margin-top: 3px;
+    }
+
+    .result-card.light .result-card-sub { color: var(--green-dark); opacity: .7; }
+
+    @media (max-width: 480px) {
+      .result-cards-row2 { grid-template-columns: 1fr; }
+      .result-annual-block { grid-template-columns: 1fr; gap: 16px; }
+      .annual-val { font-size: 1.5rem; }
+    }
+
+    /* ===== VOORDELEN ===== */
+    .voordelen-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .voordeel-card {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-lg);
+      padding: 28px 24px;
+      transition: transform .25s, box-shadow .25s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .voordeel-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--green);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .3s;
+    }
+
+    .voordeel-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .voordeel-card:hover::after { transform: scaleX(1); }
+
+    .voordeel-icon {
+      width: 52px; height: 52px;
+      border-radius: 12px;
+      background: var(--green-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 16px;
+    }
+
+    .voordeel-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--gray-900);
+      margin-bottom: 8px;
+    }
+
+    .voordeel-text {
+      font-size: .875rem;
+      color: var(--gray-500);
+      line-height: 1.65;
+    }
+
+    /* ===== HOW IT WORKS ===== */
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      position: relative;
+    }
+
+    .steps-grid::before {
+      content: '';
+      position: absolute;
+      top: 28px;
+      left: calc(12.5% + 28px);
+      right: calc(12.5% + 28px);
+      height: 2px;
+      background: linear-gradient(90deg, var(--green), rgba(0,191,105,.2));
+      z-index: 0;
+    }
+
+    .step-card { text-align: center; position: relative; z-index: 1; }
+
+    .step-num {
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      background: var(--green);
+      color: var(--white);
+      font-size: 1.1rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      box-shadow: 0 4px 14px rgba(0,191,105,.35);
+    }
+
+    .step-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--gray-900);
+      margin-bottom: 8px;
+    }
+
+    .step-text { font-size: .85rem; color: var(--gray-500); line-height: 1.65; }
+
+    /* ===== SOCIAL PROOF / REVIEWS ===== */
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .review-card {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-lg);
+      padding: 28px 24px;
+      transition: transform .25s, box-shadow .25s;
+    }
+
+    .review-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+
+    .review-stars { color: #f59e0b; font-size: 1rem; margin-bottom: 14px; letter-spacing: 2px; }
+
+    .review-text {
+      font-size: .9rem;
+      color: var(--gray-700);
+      line-height: 1.7;
+      margin-bottom: 20px;
+      font-style: italic;
+    }
+
+    .reviewer { display: flex; align-items: center; gap: 12px; }
+
+    .reviewer-avatar {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: var(--green);
+      color: var(--white);
+      font-size: .85rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .reviewer-name { font-size: .9rem; font-weight: 700; color: var(--gray-900); }
+    .reviewer-loc { font-size: .8rem; color: var(--gray-500); }
+    .reviewer-service { font-size: .75rem; font-weight: 600; color: var(--green); margin-top: 2px; }
+
+    /* ===== PARTNER FORMULIER ===== */
+    .partner-section {
+      padding: 88px 0;
+      background: linear-gradient(135deg, var(--green-xlight) 0%, var(--white) 60%);
+    }
+
+    .partner-inner {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 64px;
+      align-items: start;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .partner-left h2 {
+      font-size: clamp(1.6rem, 2.8vw, 2.2rem);
+      font-weight: 800;
+      color: var(--gray-900);
+      letter-spacing: -.02em;
+      line-height: 1.2;
+      margin-bottom: 14px;
+    }
+
+    .partner-left p {
+      font-size: .975rem;
+      color: var(--gray-500);
+      line-height: 1.7;
+      margin-bottom: 28px;
+    }
+
+    .partner-usp {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+
+    .usp-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .usp-icon {
+      width: 36px; height: 36px;
+      border-radius: 8px;
+      background: var(--green-light);
+      color: var(--green-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .usp-text strong {
+      display: block;
+      font-size: .9rem;
+      font-weight: 700;
+      color: var(--gray-900);
+      margin-bottom: 2px;
+    }
+
+    .usp-text span { font-size: .82rem; color: var(--gray-500); }
+
+    .partner-trust {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .trust-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: .78rem;
+      font-weight: 600;
+      color: var(--gray-600);
+      background: var(--white);
+      padding: 6px 12px;
+      border-radius: 100px;
+      border: 1px solid var(--gray-200);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* Form card */
+    .partner-form-card {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-lg);
+      padding: 36px 32px;
+    }
+
+    .form-card-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--gray-900);
+      margin-bottom: 4px;
+    }
+
+    .form-card-sub {
+      font-size: .82rem;
+      color: var(--gray-500);
+      margin-bottom: 6px;
+    }
+
+    .required-note {
+      font-size: .75rem;
+      color: var(--gray-400);
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--gray-100);
+    }
+
+    .required-note span { color: #ef4444; }
+
+    .form-group { margin-bottom: 14px; }
+
+    .form-label {
+      display: block;
+      font-size: .8rem;
+      font-weight: 600;
+      color: var(--gray-700);
+      margin-bottom: 6px;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 11px 14px;
+      font-size: .9rem;
+      color: var(--gray-900);
+      background: var(--gray-50);
+      border: 1.5px solid var(--gray-200);
+      border-radius: 8px;
+      outline: none;
+      transition: border-color .2s, background .2s, box-shadow .2s;
+      font-family: inherit;
+      appearance: none;
+    }
+
+    .form-control:focus {
+      border-color: var(--green);
+      background: var(--white);
+      box-shadow: 0 0 0 3px rgba(0,191,105,.12);
+    }
+
+    select.form-control {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      padding-right: 40px;
+      cursor: pointer;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .btn-submit {
+      width: 100%;
+      padding: 14px;
+      font-size: 1rem;
+      font-weight: 700;
+      background: var(--green);
+      color: var(--white);
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background .2s, transform .15s, box-shadow .2s;
+      margin-top: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: inherit;
+    }
+
+    .btn-submit:hover {
+      background: var(--green-dark);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(0,191,105,.4);
+    }
+
+    .form-footer-text {
+      text-align: center;
+      font-size: .78rem;
+      color: var(--gray-400);
+      margin-top: 12px;
+      line-height: 1.6;
+    }
+
+    /* ===== SUCCESS STATE ===== */
+    .success-state {
+      text-align: center;
+      padding: 48px 20px;
+      display: none;
+    }
+
+    .success-state.show { display: block; }
+
+    .success-icon-wrap {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      background: var(--green-light);
+      color: var(--green);
+      font-size: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+    }
+
+    .success-title { font-size: 1.3rem; font-weight: 800; color: var(--gray-900); margin-bottom: 8px; }
+    .success-sub { font-size: .9rem; color: var(--gray-500); line-height: 1.6; }
+
+    /* ===== STATS BAR ===== */
+    .stats-bar {
+      background: var(--brand-dark);
+      padding: 28px 24px;
+    }
+
+    .stats-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .stat-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 32px;
+    }
+
+    .stat-item:not(:last-child) { border-right: 1px solid rgba(255,255,255,.12); }
+
+    .stat-num { font-size: 1.4rem; font-weight: 800; color: var(--white); }
+    .stat-label { font-size: .82rem; color: rgba(255,255,255,.6); line-height: 1.3; }
+
+    @media (max-width: 640px) {
+      .stats-inner {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+      }
+      .stat-item {
+        padding: 18px 16px;
+        border-right: none !important;
+        border-bottom: 1px solid rgba(255,255,255,.08);
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+      }
+      .stat-item:nth-child(odd) {
+        border-right: 1px solid rgba(255,255,255,.08) !important;
+      }
+      .stat-item:nth-last-child(-n+2) {
+        border-bottom: none;
+      }
+      .stat-num { font-size: 1.6rem; }
+      .stat-label { font-size: .8rem; }
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--brand-dark);
+      color: rgba(255,255,255,.6);
+      padding: 64px 0 0;
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr 1fr;
+      gap: 40px;
+      padding-bottom: 48px;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+
+    .footer-brand .nav-logo { color: var(--white); margin-bottom: 14px; display: block; }
+    .footer-desc { font-size: .875rem; line-height: 1.7; max-width: 260px; }
+
+    .footer-col-title {
+      font-size: .85rem;
+      font-weight: 700;
+      color: var(--white);
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      margin-bottom: 18px;
+    }
+
+    .footer-col ul li { margin-bottom: 10px; }
+
+    .footer-col ul li a {
+      font-size: .875rem;
+      color: rgba(255,255,255,.55);
+      transition: color .2s;
+    }
+
+    .footer-col ul li a:hover { color: var(--white); }
+
+    .footer-contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: .875rem;
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
+
+    .footer-bottom {
+      padding: 20px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer-copy { font-size: .78rem; }
+
+    .footer-legal {
+      font-size: .78rem;
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .footer-keurmerken {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .keurmerk {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: .75rem;
+      font-weight: 600;
+      color: rgba(255,255,255,.5);
+      background: rgba(255,255,255,.06);
+      padding: 5px 12px;
+      border-radius: 100px;
+      border: 1px solid rgba(255,255,255,.1);
+    }
+
+    /* ===== MOBILE STICKY CTA ===== */
+    .mobile-cta {
+      display: none;
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      z-index: 999;
+      background: var(--green);
+      color: var(--white);
+      text-align: center;
+      padding: 16px 24px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 -4px 20px rgba(0,0,0,.15);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1024px) {
+      .footer-top { grid-template-columns: 1fr 1fr; }
+      .voordelen-grid { grid-template-columns: repeat(2, 1fr); }
+      .steps-grid { grid-template-columns: repeat(2, 1fr); }
+      .steps-grid::before { display: none; }
+    }
+
+    @media (max-width: 900px) {
+      .calc-hero-inner { grid-template-columns: 1fr; gap: 40px; }
+      .calc-hero { padding: 100px 0 60px; }
+      .partner-inner { grid-template-columns: 1fr; gap: 40px; }
+      .result-cards { grid-template-columns: 1fr; }
+      .reviews-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links, .nav-cta { display: none; }
+      .hamburger { display: flex; }
+
+      .voordelen-grid { grid-template-columns: 1fr; }
+      .steps-grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr; gap: 32px; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+      .mobile-cta { display: block; }
+      footer { padding-bottom: 68px; }
+      .choice-grid.cols-6 { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 480px) {
+      .calc-inner { padding: 20px; }
+      .calc-top { padding: 16px 20px; }
+      .result-cards { grid-template-columns: 1fr; gap: 8px; }
+      .partner-form-card { padding: 24px 18px; }
+    }
+
+    /* ===== ANIMATIONS ===== */
+    /* fade-up initial state handled by GSAP — no CSS opacity:0 to avoid from() conflict */
+    .fade-up { }
+
+    /* ===== PAIN BLOCK ===== */
+    .pain-section { background: var(--gray-50); padding: 80px 0; }
+    .pain-inner { max-width: 860px; margin: 0 auto; text-align: center; padding: 0 24px; }
+    .pain-tag { display: inline-block; background: var(--green-xlight); color: var(--green); font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; padding: 6px 14px; border-radius: 50px; margin-bottom: 20px; }
+    .pain-title { font-family: 'Nunito', sans-serif; font-size: clamp(1.5rem, 3vw, 2.2rem); font-weight: 900; color: var(--brand-dark); margin-bottom: 36px; }
+    .pain-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 32px; text-align: left; }
+    .pain-card { background: var(--white); border: 1.5px solid var(--gray-200); border-radius: 14px; padding: 20px 22px; display: flex; align-items: flex-start; gap: 14px; }
+    .pain-card-icon { width: 36px; height: 36px; background: var(--green-xlight); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
+    .pain-card-text { color: var(--gray-700); font-size: .95rem; line-height: 1.5; font-weight: 500; }
+    .pain-kicker { background: var(--brand-dark); border-radius: 14px; padding: 20px 28px; color: var(--white); font-size: 1rem; font-weight: 700; display: inline-block; }
+    .pain-kicker span { color: var(--green-light); }
+    @media (max-width: 600px) { .pain-cards { grid-template-columns: 1fr; } }
+
+    /* ===== SOLUTION BLOCK ===== */
+    .solution-section { background: var(--green-xlight); padding: 72px 0; }
+    .solution-inner { max-width: 860px; margin: 0 auto; padding: 0 24px; text-align: center; }
+    .solution-title { font-family: 'Nunito', sans-serif; font-size: clamp(1.5rem, 3vw, 2.2rem); font-weight: 900; color: var(--brand-dark); margin-bottom: 12px; }
+    .solution-sub { color: var(--gray-700); margin-bottom: 36px; font-size: 1.05rem; }
+    .solution-who { background: var(--white); border-radius: 16px; padding: 28px 32px; margin-bottom: 32px; text-align: left; max-width: 520px; margin-left: auto; margin-right: auto; }
+    .solution-who p { font-weight: 700; color: var(--brand-dark); margin-bottom: 14px; font-size: 1rem; }
+    .solution-who ul { list-style: none; }
+    .solution-who ul li { color: var(--gray-700); padding: 7px 0; display: flex; align-items: center; gap: 10px; font-size: .95rem; }
+    .solution-who ul li::before { content: '✓'; color: var(--green); font-weight: 900; }
+    .solution-nopes { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+    .nope-badge { background: var(--white); border: 2px solid var(--green); color: var(--green); font-size: .9rem; font-weight: 700; padding: 10px 20px; border-radius: 50px; display: inline-flex; align-items: center; gap: 8px; }
+    .nope-badge::before { content: ''; width: 8px; height: 8px; background: var(--green); border-radius: 50%; flex-shrink: 0; }
+
+    /* ===== MONEY MATH ===== */
+    .money-section { background: var(--brand-dark); padding: 40px 0; }
+    .money-inner { max-width: 860px; margin: 0 auto; padding: 0 24px; text-align: center; }
+    .money-title { font-family: 'Nunito', sans-serif; font-size: clamp(1.2rem, 2.5vw, 1.6rem); font-weight: 900; color: var(--white); margin-bottom: 4px; }
+    .money-sub { color: rgba(255,255,255,.55); margin-bottom: 24px; font-size: .85rem; }
+    .money-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-bottom: 20px; }
+    .money-item { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1); border-radius: 12px; padding: 16px 14px; }
+    .money-val { font-family: 'Nunito', sans-serif; font-size: 1.25rem; font-weight: 900; color: var(--green-light); margin-bottom: 4px; }
+    .money-lbl { color: rgba(255,255,255,.6); font-size: .78rem; }
+    .money-result { background: var(--green); border-radius: 12px; padding: 16px 24px; display:flex; align-items:center; justify-content:center; gap:16px; flex-wrap:wrap; }
+    .money-result-label { color: rgba(0,0,0,.65); font-size: .82rem; margin-bottom: 0; }
+    .money-result-val { font-family: 'Nunito', sans-serif; font-size: clamp(1.3rem, 3vw, 1.9rem); font-weight: 900; color: var(--white); }
+
+    /* ===== EASE BLOCK ===== */
+    .ease-section { background: var(--white); padding: 72px 0; }
+    .ease-inner { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+    .ease-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+    .ease-left .section-tag { justify-content: flex-start; margin-bottom: 16px; }
+    .ease-left h2 { font-family: 'Nunito', sans-serif; font-size: clamp(1.4rem, 2.5vw, 1.9rem); font-weight: 900; color: var(--brand-dark); margin-bottom: 20px; }
+    .ease-steps { display: flex; flex-direction: column; gap: 14px; margin-bottom: 28px; }
+    .ease-step { display: flex; align-items: center; gap: 14px; font-size: 1rem; font-weight: 600; color: var(--brand-dark); }
+    .ease-step-num { width: 36px; height: 36px; background: var(--green); color: var(--white); font-weight: 900; font-size: .95rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .ease-right { background: var(--green-xlight); border-radius: 20px; padding: 32px 28px; }
+    .ease-right h3 { font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 1.1rem; color: var(--brand-dark); margin-bottom: 16px; }
+    .ease-nopes { display: flex; flex-direction: column; gap: 10px; }
+    .ease-nope { display: flex; align-items: center; gap: 10px; color: var(--gray-700); font-size: .95rem; }
+    .ease-nope::before { content: '→'; flex-shrink: 0; }
+    /* ===== SOLUTION COMBO GRID ===== */
+    .solution-combo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; max-width: 960px; margin: 0 auto 40px; }
+    .solution-combo-grid .sol-card-left { background: var(--green-xlight); border-radius: 20px; padding: 32px 28px; }
+    .solution-combo-grid .sol-card-right { background: var(--brand-dark); border-radius: 20px; padding: 32px 28px; }
+    .sol-card-left h3 { font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 1.1rem; color: var(--brand-dark); margin-bottom: 16px; }
+    .sol-card-right h3 { font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 1.1rem; color: var(--white); margin-bottom: 16px; }
+    .sol-check { display: flex; align-items: center; gap: 10px; color: var(--gray-700); font-size: .95rem; margin-bottom: 12px; }
+    .sol-check span.chk { color: var(--green); font-weight: 900; flex-shrink: 0; }
+    .sol-step { display: flex; align-items: center; gap: 12px; color: rgba(255,255,255,.85); font-size: .95rem; margin-bottom: 12px; }
+    .sol-step-num { background: var(--green); color: #fff; font-weight: 900; font-size: .8rem; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .sol-footer { color: rgba(255,255,255,.45); font-size: .82rem; border-top: 1px solid rgba(255,255,255,.1); padding-top: 14px; margin-top: 6px; }
+    @media (max-width: 680px) {
+      .money-grid { grid-template-columns: 1fr; }
+      .solution-combo-grid { grid-template-columns: 1fr; }
+      .nope-badges-wrap { display: none !important; }
+    }
+
+    /* ===== ROI CALCULATOR SECTION ===== */
+    .roi-calc-section { background: var(--white); padding: 80px 0; }
+    .calc-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 28px; justify-content: center; }
+    .calc-tab { padding: 10px 20px; border: 2px solid var(--gray-200); border-radius: 50px; background: var(--white); font-family: inherit; font-size: .88rem; font-weight: 600; color: var(--gray-700); cursor: pointer; transition: all .2s; }
+    .calc-tab:hover { border-color: var(--green); color: var(--green-dark); }
+    .calc-tab.active { border-color: var(--green); background: var(--green); color: var(--white); }
+    .roi-calc-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 16px; box-shadow: 0 4px 24px rgba(0,0,0,.06); overflow: hidden; }
+    .roi-calc-header { display: flex; align-items: center; justify-content: space-between; padding: 20px 28px; border-bottom: 1px solid var(--gray-100); gap: 12px; flex-wrap: wrap; }
+    .roi-calc-header-left { display: flex; align-items: center; gap: 14px; }
+    .roi-calc-header-icon { font-size: 1.8rem; }
+    .roi-calc-header-title { font-weight: 700; font-size: 1.05rem; color: var(--gray-900); }
+    .roi-calc-header-sub { font-size: .8rem; color: var(--gray-500); margin-top: 2px; }
+    .roi-calc-header-badge { background: var(--green-xlight); color: var(--green-dark); font-size: .78rem; font-weight: 700; padding: 5px 12px; border-radius: 20px; white-space: nowrap; }
+    .roi-calc-body { padding: 28px; }
+    .keuze-grid { display: flex; gap: 10px; margin-bottom: 24px; }
+    .keuze-card { flex: 1; min-width: 0; padding: 14px 10px; border: 2px solid var(--gray-200); border-radius: 10px; text-align: center; cursor: pointer; transition: all .2s; background: var(--white); font-family: inherit; }
+    .keuze-card:hover { border-color: var(--green); }
+    .keuze-card.active { border-color: var(--green); background: var(--green-xlight); }
+    .keuze-card-icon { font-size: 1.3rem; margin-bottom: 5px; display: block; }
+    .keuze-card-label { font-size: .85rem; font-weight: 700; color: var(--gray-900); display: block; }
+    .keuze-card.active .keuze-card-label { color: var(--green-dark); }
+    .keuze-card-sub { font-size: .72rem; color: var(--gray-500); display: block; margin-top: 2px; }
+    .calc-section-label { font-weight: 700; color: var(--gray-700); margin-bottom: 10px; font-size: .9rem; }
+    .slider-group { margin-bottom: 22px; }
+    .slider-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+    .slider-label { font-size: .88rem; color: var(--gray-700); font-weight: 500; }
+    .slider-value { font-size: .88rem; font-weight: 700; color: var(--green-dark); }
+    .range-input { width: 100%; height: 6px; border-radius: 4px; outline: none; cursor: pointer; -webkit-appearance: none; background: linear-gradient(to right, var(--green) 0%, var(--green) var(--pct, 50%), var(--gray-200) var(--pct, 50%), var(--gray-200) 100%); }
+    .range-input::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; border-radius: 50%; background: var(--green); border: 2px solid var(--white); box-shadow: 0 1px 6px rgba(0,0,0,.2); }
+    .slider-minmax { display: flex; justify-content: space-between; margin-top: 4px; font-size: .75rem; color: var(--gray-400); }
+    .calc-inputs-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-bottom: 20px; }
+    .calc-input-label { font-size: .82rem; font-weight: 600; color: var(--gray-700); display: block; margin-bottom: 5px; }
+    .calc-input-hint { font-size: .72rem; color: var(--gray-400); margin-top: 4px; }
+    .systeem-grid { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+    .systeem-card { flex: 1; min-width: 80px; padding: 12px 8px; border: 2px solid var(--gray-200); border-radius: 10px; text-align: center; cursor: pointer; transition: all .2s; background: var(--white); font-family: inherit; }
+    .systeem-card.active { border-color: var(--green); background: var(--green-xlight); }
+    .systeem-kw { font-weight: 700; font-size: .95rem; color: var(--gray-900); }
+    .systeem-sub { font-size: .72rem; color: var(--gray-500); }
+    .systeem-prijs { font-size: .78rem; color: var(--green-dark); font-weight: 600; margin-top: 3px; }
+    .dak-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin-bottom: 22px; }
+    .dak-card { padding: 12px 8px; border: 2px solid var(--gray-200); border-radius: 10px; text-align: center; cursor: pointer; transition: all .2s; background: var(--white); font-family: inherit; }
+    .dak-card.active { border-color: var(--green); background: var(--green-xlight); }
+    .dak-icon { font-size: 1.3rem; margin-bottom: 4px; }
+    .dak-label { font-size: .82rem; font-weight: 700; color: var(--gray-900); }
+    .dak-desc { font-size: .72rem; color: var(--gray-500); }
+    .calc-highlight { background: linear-gradient(135deg, var(--brand-dark) 0%, var(--brand-dark2) 100%); border-radius: 12px; padding: 22px 28px; text-align: center; margin-bottom: 20px; }
+    .calc-highlight-val { font-size: 2.4rem; font-weight: 800; color: var(--green); line-height: 1.1; }
+    .calc-highlight-lbl { font-size: .88rem; color: rgba(255,255,255,.75); margin-top: 6px; }
+    .calc-results { background: var(--gray-50); border-radius: 10px; padding: 20px; margin-bottom: 18px; }
+    .calc-results-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 14px; }
+    .result-label { font-size: .78rem; color: var(--gray-500); margin-bottom: 4px; }
+    .result-val { font-size: 1.1rem; font-weight: 700; color: var(--green-dark); }
+    .result-val.dark { color: var(--gray-900); }
+    .calc-cta-btn { display: block; width: 100%; padding: 14px; text-align: center; background: var(--green); color: var(--white); border-radius: 10px; font-weight: 700; font-size: 1rem; text-decoration: none; margin-bottom: 12px; transition: background .2s; }
+    .calc-cta-btn:hover { background: var(--green-dark); }
+    .calc-disclaimer { font-size: .75rem; color: var(--gray-400); text-align: center; }
+    /* Isolatie type grid — 5 items: 3+2 op desktop, 2+2+1 op mobiel */
+    .isol-type-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+    .isol-type-grid .keuze-card:last-child:nth-child(3n+2) {
+      grid-column: span 2; /* "Alles tegelijk" breed als het alleen op een rij staat */
+    }
+
+    @media(max-width:680px) {
+      .keuze-grid { flex-wrap: wrap; }
+      .keuze-card { min-width: calc(50% - 5px); }
+      .calc-inputs-row { grid-template-columns: 1fr; }
+      .systeem-grid { flex-wrap: wrap; }
+      .dak-grid { grid-template-columns: repeat(2,1fr); }
+      .dak-card { padding: 14px 10px; }
+      .dak-label { font-size: .88rem; }
+      .dak-desc { font-size: .76rem; }
+      .isol-type-grid { grid-template-columns: repeat(2, 1fr); }
+      .isol-type-grid .keuze-card:last-child:nth-child(odd) {
+        grid-column: 1 / -1;
+      }
+      /* Resultaten: rij-layout zodat label en waarde op 1 regel staan */
+      .calc-results-grid {
+        grid-template-columns: 1fr !important;
+        gap: 10px;
+        text-align: left;
+      }
+      .calc-results-grid > div {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 8px;
+        border-bottom: 1px solid rgba(0,191,105,.12);
+        padding-bottom: 8px;
+      }
+      .calc-results-grid > div:last-child { border-bottom: none; padding-bottom: 0; }
+      .result-label { margin-bottom: 0; white-space: nowrap; flex-shrink: 0; font-size: .8rem; }
+      .result-val { font-size: 1rem; white-space: nowrap; text-align: right; }
+    }
+
+  /* ===== PAKKETTEN ===== */
+  .pakketten-section { background: var(--white); padding: 80px 0; }
+  .pakketten-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; margin-top: 36px; }
+  .pakket-card {
+    background: #fff; border: 1.5px solid var(--gray-200);
+    border-radius: 16px; padding: 28px 24px; position: relative;
+    display: flex; flex-direction: column; gap: 0;
+  }
+  .pakket-card.featured {
+    border-color: var(--green); box-shadow: 0 0 0 3px rgba(52,208,112,.12);
+  }
+  .pakket-card.anchor-card { border-color: #f97316; }
+  .pakket-badge {
+    position: absolute; top: -13px; left: 50%; transform: translateX(-50%);
+    background: var(--green); color: #fff; font-size: .7rem; font-weight: 700;
+    letter-spacing: .08em; padding: 4px 14px; border-radius: 99px; white-space: nowrap;
+  }
+  .pakket-badge.orange { background: #f97316; }
+  .pakket-tag { font-size: .7rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--gray-400); margin-bottom: 8px; }
+  .pakket-name { font-size: 1.3rem; font-weight: 800; color: var(--gray-900); margin-bottom: 4px; }
+  .pakket-price { font-size: 2rem; font-weight: 900; color: var(--gray-900); line-height: 1; margin: 10px 0 2px; }
+  .pakket-price span { font-size: .9rem; font-weight: 400; color: var(--gray-400); }
+  .pakket-desc { font-size: .83rem; color: var(--gray-500); margin-bottom: 16px; }
+  .pakket-features { list-style: none; padding: 0; margin: 0 0 20px; display: flex; flex-direction: column; gap: 9px; }
+  .pakket-features li { font-size: .84rem; color: var(--gray-700); display: flex; gap: 8px; align-items: flex-start; }
+  .pakket-features li .ic { flex-shrink: 0; font-size: .85rem; margin-top: 1px; }
+  .pakket-features li .ic.g { color: var(--green); }
+  .pakket-features li .ic.r { color: #ef4444; }
+  .pakket-footer { margin-top: auto; padding-top: 16px; border-top: 1px solid var(--gray-200); font-size: .76rem; color: var(--green-dark); font-weight: 600; }
+  .pakket-cta { display: block; text-align: center; padding: 12px 20px; border-radius: 50px; font-weight: 700; font-size: .9rem; text-decoration: none; transition: all .18s; margin-top: 16px; }
+  .pakket-cta.primary { background: var(--green); color: #0D1F12; }
+  .pakket-cta.primary:hover { background: var(--green-dark); }
+  .pakket-cta.secondary { background: transparent; border: 1.5px solid var(--gray-300); color: var(--gray-700); }
+  .pakket-cta.secondary:hover { border-color: var(--green); color: var(--green-dark); }
+  @media (max-width: 860px) { .pakketten-grid { grid-template-columns: 1fr; max-width: 420px; margin-inline: auto; } }
+
+  /* ===== VERGELIJKINGSTABEL ===== */
+  .vergelijk-section { background: var(--gray-50,#f8f9fa); padding: 80px 0; }
+  .vergelijk-table { width: 100%; border-collapse: collapse; margin-top: 32px; font-size: .88rem; }
+  .vergelijk-table th { padding: 12px 16px; text-align: left; font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--gray-400); border-bottom: 2px solid var(--gray-200); }
+  .vergelijk-table th.hl { color: var(--green-dark); background: rgba(52,208,112,.06); }
+  .vergelijk-table td { padding: 13px 16px; border-bottom: 1px solid var(--gray-200); color: var(--gray-600); }
+  .vergelijk-table td.hl { background: rgba(52,208,112,.05); font-weight: 600; color: var(--gray-900); }
+  .vergelijk-table tr:last-child td { border-bottom: none; }
+  .vj-yes { color: var(--green-dark); font-weight: 700; }
+  .vj-no { color: #ef4444; }
+  .vj-mid { color: #f59e0b; }
+  .vergelijk-wrap { overflow-x: auto; }
+</style>
+  <link rel="canonical" href="https://starleads.nl/voor-installateurs" />
+</head>
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar" id="navbar">
+  <div class="navbar-inner">
+    <a href="/" style="display:inline-flex;align-items:center;flex-shrink:0"><img src="/logo-licht.svg" alt="Starleads.nl" height="40" style="display:block" loading="lazy"></a>
+    <div class="nav-links">
+              <div class="dropdown">
+        <a href="#" class="nav-link">Diensten <span class="dropdown-arrow">▼</span></a>
+        <div class="dropdown-menu">
+          <div>
+            <div class="nav-dropdown-title">Onze diensten</div>
+            <a href="/zonnepanelen">Zonnepanelen</a>
+            <a href="/warmtepomp">Warmtepomp</a>
+            <a href="/laadpaal">Laadpaal</a>
+            <a href="/thuisbatterij">Thuisbatterij</a>
+            <a href="/airco">Airco</a>
+            <a href="/isolatie">Isolatie</a>
+          </div>
+        </div>
+      </div>
+              <div class="dropdown">
+        <a href="#" class="nav-link">Steden <span class="dropdown-arrow">▼</span></a>
+        <div class="dropdown-menu">
+          <div>
+            <div class="nav-dropdown-title">Populaire steden</div>
+            <a href="/alkmaar">Alkmaar</a>
+            <a href="/almere">Almere</a>
+            <a href="/amersfoort">Amersfoort</a>
+            <a href="/amsterdam">Amsterdam</a>
+            <a href="/apeldoorn">Apeldoorn</a>
+            <a href="/arnhem">Arnhem</a>
+            <a href="/breda">Breda</a>
+            <a href="/delft">Delft</a>
+            <a href="/den-bosch">Den Bosch</a>
+            <a href="/den-haag">Den Haag</a>
+            <a href="/deventer">Deventer</a>
+            <a href="/dordrecht">Dordrecht</a>
+            <a href="/eindhoven">Eindhoven</a>
+          </div>
+          <div>
+            <div class="nav-dropdown-title">&nbsp;</div>
+            <a href="/enschede">Enschede</a>
+            <a href="/groningen">Groningen</a>
+            <a href="/haarlem">Haarlem</a>
+            <a href="/leiden">Leiden</a>
+            <a href="/maastricht">Maastricht</a>
+            <a href="/nijmegen">Nijmegen</a>
+            <a href="/rotterdam">Rotterdam</a>
+            <a href="/tilburg">Tilburg</a>
+            <a href="/utrecht">Utrecht</a>
+            <a href="/zaandam">Zaandam</a>
+            <a href="/zoetermeer">Zoetermeer</a>
+            <a href="/zwolle">Zwolle</a>
+          </div>
+        </div>
+      </div>
+      <a href="/installateurvinden.html#how-it-">Hoe het werkt</a>
+      <a href="/installateurvinden.html#besparing-bere">Besparing berekenen</a>
+      <a href="/voor-installateurs">Voor installateurs</a>
+      <a href="/blog">Blog</a>
+    </div>
+    <div class="nav-cta">
+      <a href="/#aanvragen" class="btn-green">Vind lokale installateur</a>
+    </div>
+    <div class="hamburger" id="hamburger" aria-label="Menu openen">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="/#diensten">Diensten</a>
+    <a href="/steden">Steden</a>
+    <a href="/#how-it-works">Hoe het werkt</a>
+    <a href="/#besparing-berekenen">Besparing berekenen</a>
+    <a href="/voor-installateurs">Voor installateurs</a>
+    <a href="#partnerformulier" class="btn-green">Partner worden</a>
+  </div>
+</nav>
+
+<!-- ===== CALCULATOR HERO ===== -->
+<section class="calc-hero">
+  <div class="container">
+    <div class="calc-hero-inner">
+
+      <!-- Left: Intro tekst -->
+      <div class="calc-hero-text" id="heroText">
+        <div class="hero-badge">Exclusief voor installateurs</div>
+        <h1>Minimaal 5 gekwalificeerde afspraken per maand. <span class="hl">Behalen we dit niet? Dan gaan we kosteloos door.</span></h1>
+        <p>Wij bellen elke homeowner na, kwalificeren op jouw criteria en plannen de afspraak in jouw agenda. Jij hoeft alleen te verschijnen.</p>
+        <div class="hero-stats">
+          <div class="hero-stat"><span class="dot"></span>Minimaal 5 gekwalificeerde afspraken per maand — gegarandeerd</div>
+          <div class="hero-stat"><span class="dot"></span>Afspraken gebeld &amp; gekwalificeerd door ons</div>
+          <div class="hero-stat"><span class="dot"></span>Behalen we het niet? We gaan kosteloos door tot het gehaald is</div>
+          <div class="hero-stat"><span class="dot"></span>Geen volume? €0 kosten</div>
+        </div>
+        <a href="#calcCard" class="btn-primary" style="margin-top:24px;display:inline-flex;align-items:center;gap:8px;background:#34D070;color:#0D1F12;font-weight:700;padding:14px 28px;border-radius:50px;text-decoration:none;font-size:1rem;transition:background .2s;">Check hoeveel extra installaties jij kunt realiseren →</a>
+      </div>
+
+      <!-- Right: Calculator -->
+      <div class="calc-card" id="calcCard">
+        <!-- Progress bar -->
+        <div class="calc-progress-bar-wrap">
+          <div class="calc-progress-bar" id="progressBar" style="width:25%"></div>
+        </div>
+
+        <!-- Top: stap info -->
+        <div class="calc-top">
+          <span class="calc-step-label" id="stepLabel">Vraag 1 van 4</span>
+          <div class="calc-step-dots" id="stepDots">
+            <div class="calc-dot active"></div>
+            <div class="calc-dot"></div>
+            <div class="calc-dot"></div>
+            <div class="calc-dot"></div>
+            <div class="calc-dot"></div>
+          </div>
+        </div>
+
+        <!-- Step content -->
+        <div id="calcStepContent"></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== STATS BAR ===== -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat-item">
+      <div>
+        <div class="stat-num" data-target="15" data-suffix="+">15+</div>
+        <div class="stat-label">actieve installateurs</div>
+      </div>
+    </div>
+    <div class="stat-item">
+      <div>
+        <div class="stat-num" data-target="94" data-suffix="%">94%</div>
+        <div class="stat-label">tevredenheidspercentage</div>
+      </div>
+    </div>
+    <div class="stat-item">
+      <div>
+        <div class="stat-num" data-target="3" data-suffix=" tot 5">3 tot 5</div>
+        <div class="stat-label">afspraken per installateur per week</div>
+      </div>
+    </div>
+    <div class="stat-item">
+      <div>
+        <div class="stat-num" data-target="48" data-suffix="u">48u</div>
+        <div class="stat-label">gem. afspraak-aanlevertijd</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PAIN BLOCK ===== -->
+<section class="pain-section">
+  <div class="pain-inner">
+    <div class="pain-tag">Herkenbaar?</div>
+    <h2 class="pain-title">Dit kost je elke week duizenden euro's aan gemiste omzet</h2>
+    <div class="pain-cards">
+      <div class="pain-card">
+        <div class="pain-card-icon">1</div>
+        <span class="pain-card-text">Jouw monteurs staan soms stil door een lege agenda</span>
+      </div>
+      <div class="pain-card">
+        <div class="pain-card-icon">2</div>
+        <span class="pain-card-text">Je maakt offertes die nooit doorgaan</span>
+      </div>
+      <div class="pain-card">
+        <div class="pain-card-icon">3</div>
+        <span class="pain-card-text">Je krijgt aanvragen van "oriënteerders" die toch niets doen</span>
+      </div>
+      <div class="pain-card">
+        <div class="pain-card-icon">4</div>
+        <span class="pain-card-text">Jouw groei stokt door een gebrek aan constante instroom</span>
+      </div>
+    </div>
+    <div class="pain-kicker">Dit kost je <span>duizenden euro's per week</span> aan gemiste omzet</div>
+  </div>
+</section>
+
+<!-- ===== SOLUTION + EASE COMBINED ===== -->
+<section class="solution-section" style="background:var(--white);padding:80px 0;">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:48px;">
+      <div class="section-tag" style="justify-content:center">De oplossing</div>
+      <h2 style="font-family:'Nunito',sans-serif;font-size:clamp(1.6rem,3vw,2.3rem);font-weight:900;color:var(--brand-dark);margin-top:12px;">Wij vullen jouw agenda met kopers, niet met leads</h2>
+      <p style="color:var(--gray-700);margin-top:10px;font-size:1rem;">Je ontvangt afspraken met huiseigenaren die klaar zijn om te beslissen. Jij hoeft alleen nog maar te installeren.</p>
+    </div>
+
+    <div class="solution-combo-grid">
+
+      <!-- Links: wie zijn het -->
+      <div class="sol-card-left">
+        
+        <h3>Huiseigenaren die al klaar zijn</h3>
+        <div class="sol-check"><span class="chk">✓</span> Actief op zoek naar een installateur</div>
+        <div class="sol-check"><span class="chk">✓</span> Budget hebben voor de installatie</div>
+        <div class="sol-check"><span class="chk">✓</span> Binnen korte tijd willen beslissen</div>
+      </div>
+
+      <!-- Rechts: jij hoeft alleen -->
+      <div class="sol-card-right">
+        
+        <h3>Jij hoeft alleen dit te doen</h3>
+        <div class="sol-step"><div class="sol-step-num">1</div> Schouwing/huisbezoek</div>
+        <div class="sol-step"><div class="sol-step-num">2</div> Offerte maken</div>
+        <div class="sol-step"><div class="sol-step-num">3</div> Installeren</div>
+        <p class="sol-footer">Geen advertenties, geen acquisitie, geen systemen</p>
+      </div>
+    </div>
+
+    <!-- Nope badges -->
+    <div class="nope-badges-wrap" style="display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-bottom:40px;">
+      <div class="nope-badge">Geen koude leads</div>
+      <div class="nope-badge">Geen concurrentie</div>
+      <div class="nope-badge">Geen tijdverspilling</div>
+    </div>
+
+    <!-- Urgency banner -->
+    <div style="max-width:780px;margin:0 auto;background:var(--brand-dark);border-radius:18px;padding:28px 36px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
+      
+      <div style="flex:1;min-width:200px;">
+        <p style="color:var(--white);font-weight:800;font-size:1.05rem;margin-bottom:4px;">Wij werken met 1 installateur per plaats of regio</p>
+        <p style="color:rgba(255,255,255,.6);font-size:.88rem;margin:0;">Om de exclusiviteit van jouw afspraken te waarborgen werken we niet met meerdere installateurs in hetzelfde gebied. <strong style="color:var(--green-light);">Vol = vol.</strong></p>
+      </div>
+      <a href="#partnerformulier" style="background:#34D070;color:#0D1F12;font-weight:800;font-size:.9rem;padding:12px 22px;border-radius:50px;text-decoration:none;white-space:nowrap;flex-shrink:0;">Claim jouw regio →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== OFFER / VOORDELEN ===== -->
+<section class="section section-gray">
+  <div class="container">
+    <div class="section-header fade-up">
+      <div class="section-tag">Wat je krijgt</div>
+      <h2 class="section-title">Alles wat je nodig hebt om te groeien</h2>
+      <p class="section-sub">Als partner van Starleads.nl ontvang je gekwalificeerde afspraken van huiseigenaren die actief op zoek zijn naar een installateur.</p>
+    </div>
+
+    <div class="voordelen-grid" id="voordelenGrid">
+      <div class="voordeel-card fade-up">
+        <div class="voordeel-icon">●</div>
+        <h3 class="voordeel-title">Exclusieve afspraken per regio</h3>
+        <p class="voordeel-text">Jij bent de enige installateur op die aanvraag. Geen concurrentie, een eerlijke kans op elke klant.</p>
+      </div>
+      <div class="voordeel-card fade-up">
+        <div class="voordeel-icon">●</div>
+        <h3 class="voordeel-title">Vooraf gekwalificeerd</h3>
+        <p class="voordeel-text">Alleen serieuze huiseigenaren. Gevalideerd op locatie, budget en dienst. Geen tijdverspilling.</p>
+      </div>
+      <div class="voordeel-card fade-up">
+        <div class="voordeel-icon">●</div>
+        <h3 class="voordeel-title">Binnen 48 uur geleverd</h3>
+        <p class="voordeel-text">Snel opvolgen = hogere conversie. Je ontvangt direct alle contactgegevens zodra er een afspraak is.</p>
+      </div>
+      <div class="voordeel-card fade-up">
+        <div class="voordeel-icon">●</div>
+        <h3 class="voordeel-title">100% risico-vrij</h3>
+        <p class="voordeel-text">Geen afspraak = €0. Niet tevreden? We vervangen hem gratis. Jij betaalt alleen voor resultaat.</p>
+      </div>
+      <div class="voordeel-card fade-up">
+        <div class="voordeel-icon">●</div>
+        <h3 class="voordeel-title">Voorspelbare afsprakenstroom</h3>
+        <p class="voordeel-text">Elke week nieuwe kansen, zodat jouw planning nooit stilvalt. Geen pieken en dalen, gewoon constante instroom.</p>
+      </div>
+      <div class="voordeel-card fade-up">
+        <div class="voordeel-icon">●</div>
+        <h3 class="voordeel-title">Beperkt aantal partners per regio</h3>
+        <p class="voordeel-text">Wij werken met een select aantal installateurs per regio. Vol = vol. Zorg dat jij erbij bent voordat jouw regio dicht gaat.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PAKKETTEN ===== -->
+<section class="pakketten-section" id="pakketten">
+  <div class="container">
+    <div class="section-header fade-up">
+      <div class="section-tag">Partnerpakketten</div>
+      <h2 class="section-title">Kies hoe je wilt starten</h2>
+      <p class="section-sub">Van flexibel per afspraak tot volledig exclusief.</p>
+    </div>
+
+    <div class="pakketten-grid">
+
+      <!-- STARTER -->
+      <div class="pakket-card fade-up">
+        <div class="pakket-tag">Pakket 1</div>
+        <div class="pakket-name">Starter</div>
+        <div class="pakket-price">€175 <span>per afspraak</span></div>
+        <div class="pakket-desc">Geen maandelijkse kosten. Betaal alleen per geleverde, gekwalificeerde afspraak.</div>
+        <ul class="pakket-features">
+          <li><span class="ic g">✓</span> Geen maandelijkse vaste kosten</li>
+          <li><span class="ic g">✓</span> Betaal alleen per geleverde afspraak</li>
+          <li><span class="ic g">✓</span> Instapfee: €500 (terug bij 5 afspraken)</li>
+          <li><span class="ic g">✓</span> Afspraken gebeld &amp; gekwalificeerd op jouw criteria</li>
+          <li><span class="ic r">✗</span> Geen garantie op volume</li>
+          <li><span class="ic r">✗</span> Geen exclusiviteit in regio</li>
+          <li><span class="ic r">✗</span> Geen prioriteit bij matching</li>
+        </ul>
+        <div class="pakket-footer">Win Your Money Back: €500 instapfee terug als 5 afspraken niet geleverd in 30 dagen</div>
+        <a href="#partnerformulier" class="pakket-cta secondary">Partner worden →</a>
+      </div>
+
+      <!-- LEADS -->
+      <div class="pakket-card fade-up">
+        <div class="pakket-badge">NIEUW</div>
+        <div class="pakket-tag">Pakket 2</div>
+        <div class="pakket-name">Leads</div>
+        <div class="pakket-price">€1.000 <span>per maand</span></div>
+        <div class="pakket-desc">40 gekwalificeerde leads direct in jouw inbox. Jij belt na, wij filteren voor.</div>
+        <ul class="pakket-features">
+          <li><span class="ic g">✓</span> 40 Marketing Qualified Leads per maand</li>
+          <li><span class="ic g">✓</span> Gefilterd op koopwoning, jouw regio, jouw dienst en budget</li>
+          <li><span class="ic g">✓</span> Direct doorgestuurd naar jouw CRM, e-mail of WhatsApp</li>
+          <li><span class="ic g">✓</span> Leads komen doorlopend binnen</li>
+          <li><span class="ic g">✓</span> Garantie: minder dan 40? We vullen gratis aan</li>
+          <li><span class="ic r">✗</span> Geen telefonische kwalificatie door ons</li>
+          <li><span class="ic r">✗</span> Geen exclusiviteit in regio</li>
+        </ul>
+        <div style="margin:12px 0 8px;font-size:.75rem;font-weight:700;color:#374151;">Wat telt als MQL:</div>
+        <div style="font-size:.78rem;color:#6b7280;line-height:1.6;margin-bottom:14px;">Eigenaar koopwoning &middot; Jouw regio &middot; Jouw dienst &middot; Budget aanwezig &middot; Binnen 3 maanden starten</div>
+        <div class="pakket-footer">12 maanden: eerste 2 maanden gratis — €10.000 i.p.v. €12.000 (effectief €833/maand)</div>
+        <a href="#partnerformulier" class="pakket-cta secondary">Partner worden →</a>
+      </div>
+
+      <!-- PREMIUM -->
+      <div class="pakket-card featured fade-up">
+        <div class="pakket-badge">MEEST GEKOZEN</div>
+        <div class="pakket-tag">Pakket 3</div>
+        <div class="pakket-name">Premium</div>
+        <div class="pakket-price">€1.500 <span>per maand</span></div>
+        <div class="pakket-desc">10–15 gekwalificeerde afspraken per maand. Wij regelen alles, jij verschijnt alleen.</div>
+        <ul class="pakket-features">
+          <li><span class="ic g">✓</span> Minimaal 10–15 gekwalificeerde afspraken per maand</li>
+          <li><span class="ic g">✓</span> Wij bellen elke lead na en kwalificeren op jouw criteria</li>
+          <li><span class="ic g">✓</span> Afspraak bevestigd direct in jouw agenda</li>
+          <li><span class="ic g">✓</span> SMS-bevestiging aan homeowner voor elke afspraak</li>
+          <li><span class="ic g">✓</span> No-show? Wij herplannen dezelfde dag</li>
+          <li><span class="ic g">✓</span> Exclusiviteit in jouw regio + specialisatie</li>
+          <li><span class="ic g">✓</span> Eigen profielpagina op Starleads.nl</li>
+          <li><span class="ic g">✓</span> Maandelijkse uitlichting in onze nieuwsbrief</li>
+          <li><span class="ic g">✓</span> Garantie: niet gehaald? We gaan kosteloos door</li>
+        </ul>
+        <div class="pakket-footer">12 maanden: eerste 2 maanden gratis — €15.000 i.p.v. €18.000 (effectief €1.250/maand)</div>
+        <a href="#partnerformulier" class="pakket-cta primary">Partner worden →</a>
+      </div>
+
+    </div>
+
+    <!-- REGIO BOOST ADD-ON -->
+    <div class="regio-boost-wrap fade-up" id="regioboost" style="margin-top:48px;background:linear-gradient(135deg,#f0faf5 0%,#e6f7ee 100%);border:2px solid #00bf69;border-radius:20px;padding:40px 48px;display:flex;gap:48px;align-items:flex-start;flex-wrap:wrap;">
+      <div style="flex:1;min-width:240px;">
+        <div style="display:inline-block;background:#00bf69;color:#0D1F12;font-size:.7rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:4px 12px;border-radius:50px;margin-bottom:14px;">Alleen voor Premium Partners</div>
+        <h3 style="font-size:1.5rem;font-weight:900;color:#0D1F12;margin:0 0 8px;">Regio Boost</h3>
+        <p style="font-size:.95rem;color:#374151;line-height:1.7;margin:0 0 20px;">Extra zichtbaarheid in jouw regio via een eigen landingspagina inclusief jouw USP's, logo en recensies — gepubliceerd onder de vertrouwde Starleads-naam. Gecombineerd met een aparte Meta-campagne gericht op jouw werkgebied zorgt dit voor meer afspraken, meer naambekendheid en meer zichtbaarheid in jouw regio. Onafhankelijk, vertrouwd en volledig op jou gericht.</p>
+        <ul style="list-style:none;padding:0;margin:0 0 24px;display:flex;flex-direction:column;gap:10px;">
+          <li style="font-size:.88rem;color:#374151;display:flex;gap:10px;"><span style="color:#00bf69;font-weight:700;">✓</span> Eigen landingspagina met jouw logo, USP's en recensies</li>
+          <li style="font-size:.88rem;color:#374151;display:flex;gap:10px;"><span style="color:#00bf69;font-weight:700;">✓</span> Gepubliceerd onder de Starleads-naam</li>
+          <li style="font-size:.88rem;color:#374151;display:flex;gap:10px;"><span style="color:#00bf69;font-weight:700;">✓</span> Aparte Meta-campagne specifiek gericht op jouw regio</li>
+          <li style="font-size:.88rem;color:#374151;display:flex;gap:10px;"><span style="color:#00bf69;font-weight:700;">✓</span> Meer afspraken, naambekendheid en zichtbaarheid in jouw werkgebied</li>
+          <li style="font-size:.88rem;color:#374151;display:flex;gap:10px;"><span style="color:#00bf69;font-weight:700;">✓</span> Transparante maandrapportage</li>
+        </ul>
+        <a href="#partnerformulier" class="pakket-cta primary" style="display:inline-block;padding:14px 32px;font-size:.95rem;">Regio Boost aanvragen →</a>
+      </div>
+      <div style="flex-shrink:0;text-align:center;background:#fff;border-radius:16px;padding:28px 36px;box-shadow:0 2px 16px rgba(0,0,0,.07);">
+        <div style="font-size:.75rem;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;">Prijs per maand</div>
+        <div style="font-size:2.4rem;font-weight:900;color:#0D1F12;line-height:1;">€500</div>
+        <div style="font-size:.8rem;color:#6b7280;margin-top:6px;">adbudget + beheer<br>los van Premium Partner fee</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===== VERGELIJKINGSTABEL ===== -->
+<section class="vergelijk-section fade-up">
+  <div class="container">
+    <div class="section-header fade-up">
+      <div class="section-tag">Pakketten vergelijken</div>
+      <h2 class="section-title">Welk pakket past bij jou?</h2>
+      <p class="section-sub">Vergelijk de drie pakketten naast elkaar.</p>
+    </div>
+    <div class="vergelijk-wrap">
+      <table class="vergelijk-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Starter</th>
+            <th class="hl">Leads</th>
+            <th class="hl">Premium</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Prijs</td>
+            <td>€175/afspraak</td>
+            <td class="hl">€1.000/maand</td>
+            <td class="hl">€1.500/maand</td>
+          </tr>
+          <tr>
+            <td>Wat je krijgt</td>
+            <td>Per afspraak</td>
+            <td class="hl">40 MQL's</td>
+            <td class="hl">10–15 afspraken</td>
+          </tr>
+          <tr>
+            <td>Wij bellen na</td>
+            <td class="vj-yes">✓</td>
+            <td class="hl vj-no">✗ Jij</td>
+            <td class="hl vj-yes">✓</td>
+          </tr>
+          <tr>
+            <td>Afspraak inplannen</td>
+            <td class="vj-yes">✓</td>
+            <td class="hl vj-no">✗ Jij</td>
+            <td class="hl vj-yes">✓</td>
+          </tr>
+          <tr>
+            <td>Exclusiviteit</td>
+            <td class="vj-no">✗</td>
+            <td class="hl vj-no">✗</td>
+            <td class="hl vj-yes">✓</td>
+          </tr>
+          <tr>
+            <td>Profielpagina</td>
+            <td class="vj-no">✗</td>
+            <td class="hl vj-no">✗</td>
+            <td class="hl vj-yes">✓</td>
+          </tr>
+          <tr>
+            <td>Nieuwsbrief spotlight</td>
+            <td class="vj-no">✗</td>
+            <td class="hl vj-no">✗</td>
+            <td class="hl vj-yes">✓</td>
+          </tr>
+          <tr>
+            <td>Garantie</td>
+            <td>Win back €500</td>
+            <td class="hl">40 leads of gratis aanvullen</td>
+            <td class="hl vj-yes">10–15 of gratis door</td>
+          </tr>
+          <tr>
+            <td>Beste voor</td>
+            <td>Uitproberen</td>
+            <td class="hl">Eigen salesteam</td>
+            <td class="hl">Maximaal ontzorgen</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MONEY MATH ===== -->
+<section class="money-section">
+  <div class="money-inner">
+    <div class="section-tag" style="justify-content:center;background:rgba(52,208,112,.15);color:var(--green-light);margin-bottom:10px;">Wat betekent dit concreet?</div>
+    <h2 class="money-title">Gemiddeld per partner per maand</h2>
+    <p class="money-sub">Gebaseerd op resultaten van onze actieve installateurs</p>
+    <div class="money-grid">
+      <div class="money-item">
+        <div class="money-val">3 tot 5</div>
+        <div class="money-lbl">afspraken per week</div>
+      </div>
+      <div class="money-item">
+        <div class="money-val">1 op 3</div>
+        <div class="money-lbl">wordt klant</div>
+      </div>
+      <div class="money-item">
+        <div class="money-val">€5K tot €15K</div>
+        <div class="money-lbl">gemiddelde orderwaarde</div>
+      </div>
+    </div>
+    <div class="money-result">
+      <div class="money-result-label">Jouw extra omzet per maand</div>
+      <div class="money-result-val">€20.000 tot €80.000</div>
+    </div>
+    <div style="margin-top:24px;">
+      <a href="#calcCard" style="display:inline-flex;align-items:center;gap:8px;background:#34D070;color:#0D1F12;font-weight:800;font-size:1rem;padding:14px 28px;border-radius:50px;text-decoration:none;transition:background .2s;">
+        Check hoeveel extra omzet jij kunt realiseren →
+      </a>
+      <p style="color:rgba(255,255,255,.4);font-size:.78rem;margin-top:8px;">Gratis &nbsp;|&nbsp; Vrijblijvend &nbsp;|&nbsp; Resultaat in 30 seconden</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== HOW IT WORKS ===== -->
+<section class="section">
+  <div class="container">
+    <div class="section-header fade-up">
+      <div class="section-tag">Zo werkt het</div>
+      <h2 class="section-title">Zo start je binnen 7 dagen</h2>
+      <p class="section-sub">In vier stappen ben je actief en ontvang je jouw eerste gekwalificeerde afspraken.</p>
+    </div>
+
+    <div class="steps-grid" id="stepsGrid">
+      <div class="step-card fade-up">
+        <div class="step-num">1</div>
+        <h3 class="step-title">Aanmelden</h3>
+        <p class="step-text">Vul het partnerformulier in. We bellen je binnen 1 werkdag voor een vrijblijvend kennismakingsgesprek.</p>
+      </div>
+      <div class="step-card fade-up">
+        <div class="step-num">2</div>
+        <h3 class="step-title">Instellen</h3>
+        <p class="step-text">We stellen samen jouw profiel in: regio, specialisatie en het gewenste aantal afspraken per maand.</p>
+      </div>
+      <div class="step-card fade-up">
+        <div class="step-num">3</div>
+        <h3 class="step-title">Afspraken ontvangen</h3>
+        <p class="step-text">Zodra een passende afspraak binnenkomt, ontvang je direct alle contactgegevens in je inbox.</p>
+      </div>
+      <div class="step-card fade-up">
+        <div class="step-num">4</div>
+        <h3 class="step-title">Sluiten & groeien</h3>
+        <p class="step-text">Bel snel, lever goed werk en groei je installatiebedrijf. Meer omzet, zonder extra marketing.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PARTNER REVIEWS ===== -->
+<section class="section section-gray">
+  <div class="container">
+    <div class="section-header fade-up">
+      <div class="section-tag">Resultaten van andere installateurs</div>
+      <h2 class="section-title">Wat onze partners zeggen</h2>
+      <p class="section-sub">+15 installateurs gingen je voor. Dit zijn hun ervaringen.</p>
+    </div>
+
+    <div class="reviews-grid" id="reviewsGrid">
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Binnen 2 weken hadden we al meerdere afspraken. De kwaliteit valt echt op. Mensen die serieus zijn en al nagedacht hebben over hun keuze."</p>
+        <div class="reviewer">
+          <div class="reviewer-avatar">JV</div>
+          <div>
+            <div class="reviewer-name">Jan Vermeer</div>
+            <div class="reviewer-loc">Vermeer Zonnepanelen, Utrecht</div>
+            <div class="reviewer-service">Partner sinds 2025 &nbsp;|&nbsp; Zonnepanelen</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Fijn dat je als enige wordt gebeld op een aanvraag. Geen gedoe met anderen die ook bellen. Dat merk je echt aan hoe gesprekken verlopen."</p>
+        <div class="reviewer">
+          <div class="reviewer-avatar">SB</div>
+          <div>
+            <div class="reviewer-name">Sandra de Boer</div>
+            <div class="reviewer-loc">EcoWarmte BV, Eindhoven</div>
+            <div class="reviewer-service">Partner sinds 2025 &nbsp;|&nbsp; Warmtepomp</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Ik was eerst sceptisch, maar de afspraken zijn gewoon goed. Mensen weten wat ze willen. Geen lange overtuiggesprekken meer nodig."</p>
+        <div class="reviewer">
+          <div class="reviewer-avatar">RT</div>
+          <div>
+            <div class="reviewer-name">Rick Timmers</div>
+            <div class="reviewer-loc">LaadPro Nederland, Amsterdam</div>
+            <div class="reviewer-service">Partner sinds 2026 &nbsp;|&nbsp; Laadpaal</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ===== ROI CALCULATOR ===== -->
+<section class="roi-calc-section" id="besparing-berekenen">
+  <div class="container">
+    <div class="section-header fade-up">
+      <div class="section-tag">Besparingsrekentool voor jouw klanten</div>
+      <h2 class="section-title">Bereken de besparing per dienst</h2>
+      <p class="section-sub">Gebruik deze tool om jouw klanten direct inzicht te geven. Alle 6 diensten in één overzicht.</p>
+    </div>
+
+    <!-- Tabs -->
+    <div class="calc-tabs" id="calcTabs">
+      <button class="calc-tab active" data-dienst="zonnepanelen">Zonnepanelen</button>
+      <button class="calc-tab" data-dienst="warmtepomp">Warmtepomp</button>
+      <button class="calc-tab" data-dienst="laadpaal">Laadpaal</button>
+      <button class="calc-tab" data-dienst="thuisbatterij">Thuisbatterij</button>
+      <button class="calc-tab" data-dienst="airco">Airco</button>
+      <button class="calc-tab" data-dienst="isolatie">Isolatie</button>
+    </div>
+
+    <!-- Calculator card -->
+    <div class="roi-calc-card fade-up">
+      <div class="roi-calc-header">
+        <div class="roi-calc-header-left">
+          <span id="calcHeaderIcon" style="display:none"></span>
+          <div>
+            <div class="roi-calc-header-title" id="calcHeaderTitle">Zonnepanelen Besparingsrekentool</div>
+            <div class="roi-calc-header-sub">NL energieprijzen 2026</div>
+          </div>
+        </div>
+        <span class="roi-calc-header-badge" id="calcHeaderBadge">Gem. 2026 €0,28/kWh</span>
+      </div>
+      <div class="roi-calc-body" id="calcBody">
+        <!-- Content rendered by JS -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PARTNER FORMULIER ===== -->
+<section class="partner-section" id="partnerformulier">
+  <div class="container">
+    <div class="partner-inner">
+
+      <!-- Left -->
+      <div class="partner-left fade-up">
+        <div class="section-tag" style="justify-content:flex-start">Partner worden</div>
+        <h2>Plan jouw eerste afspraken binnen 7 dagen</h2>
+        <p>Vul het formulier in en we bellen je binnen 1 werkdag voor een vrijblijvend gesprek over de mogelijkheden in jouw regio en niche.</p>
+
+        <div class="partner-usp">
+          <div class="usp-item">
+            <div class="usp-icon" style="opacity:.4">●</div>
+            <div class="usp-text">
+              <strong>Binnen 1 werkdag reactie</strong>
+              <span>Je persoonlijke accountmanager neemt contact op</span>
+            </div>
+          </div>
+          <div class="usp-item">
+            <div class="usp-icon" style="opacity:.4">●</div>
+            <div class="usp-text">
+              <strong>Gericht op jouw niche</strong>
+              <span>We bespreken de mogelijkheden specifiek voor jouw specialisatie</span>
+            </div>
+          </div>
+          <div class="usp-item">
+            <div class="usp-icon" style="opacity:.4">●</div>
+            <div class="usp-text">
+              <strong>Volledig vrijblijvend</strong>
+              <span>Geen verplichtingen. Jij beslist zelf of je partner wil worden</span>
+            </div>
+          </div>
+          <div class="usp-item">
+            <div class="usp-icon" style="opacity:.4">●</div>
+            <div class="usp-text">
+              <strong>Privacy gewaarborgd</strong>
+              <span>Jouw bedrijfsgegevens worden nooit gedeeld zonder toestemming</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="partner-trust">
+          
+          <span class="trust-badge">SSL Beveiligd</span>
+          <span class="trust-badge">AVG Compliant</span>
+        </div>
+      </div>
+
+      <!-- Right: Form -->
+      <div class="partner-form-card fade-up">
+        <div id="partnerFormWrap">
+          <p class="form-card-title">Jouw partneraanvraag</p>
+          <p class="form-card-sub">Alle velden zijn verplicht</p>
+          <p class="required-note"><span>*</span> Verplicht veld</p>
+
+          <form id="partnerForm" novalidate onsubmit="submitPartnerFormulier(event)">
+            <div class="form-group">
+              <label class="form-label" for="pf-bedrijf">Bedrijfsnaam</label>
+              <input class="form-control" type="text" id="pf-bedrijf" placeholder="Jouw installatiebedrijf BV" required />
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="pf-voornaam">Voornaam</label>
+                <input class="form-control" type="text" id="pf-voornaam" placeholder="Jan" required />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="pf-achternaam">Achternaam</label>
+                <input class="form-control" type="text" id="pf-achternaam" placeholder="de Vries" required />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="pf-email">E-mailadres</label>
+              <input class="form-control" type="email" id="pf-email" placeholder="jan@jouwbedrijf.nl" required />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="pf-telefoon">Telefoonnummer</label>
+              <input class="form-control" type="tel" id="pf-telefoon" placeholder="06 12 34 56 78" required />
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="pf-spec">Specialisatie</label>
+                <select class="form-control" id="pf-spec" required>
+                  <option value="" disabled selected>Selecteer specialisatie</option>
+                  <option value="zonnepanelen">Zonnepanelen</option>
+                  <option value="warmtepompen">Warmtepompen</option>
+                  <option value="laadpalen">Laadpalen</option>
+                  <option value="thuisbatterijen">Thuisbatterijen</option>
+                  <option value="aircos">Airco's</option>
+                  <option value="isolatie">Isolatie</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="pf-werkgebied">Werkgebied</label>
+                <select class="form-control" id="pf-werkgebied" required>
+                  <option value="" disabled selected>Selecteer werkgebied</option>
+                  <option value="eigen-regio">Eigen regio</option>
+                  <option value="provinciaal">Provinciaal</option>
+                  <option value="meerdere-regio">Meerdere regio's</option>
+                  <option value="landelijk">Landelijk</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="pf-leads">Gewenste afsprakenstroom</label>
+                <select class="form-control" id="pf-leads" required>
+                  <option value="" disabled selected>Selecteer aantal</option>
+                  <option value="1-5">1 tot 5 afspraken per maand</option>
+                  <option value="5-15">5 tot 15 afspraken per maand</option>
+                  <option value="15+">15+ afspraken per maand</option>
+                  <option value="custom">Op maat bespreken</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="pf-planning">Planning</label>
+                <select class="form-control" id="pf-planning" required>
+                  <option value="" disabled selected>Selecteer planning</option>
+                  <option value="zsm">Zo snel mogelijk</option>
+                  <option value="1mnd">Binnen 1 maand</option>
+                  <option value="3mnd">Binnen 3 maanden</option>
+                  <option value="info">Ik wil eerst meer info</option>
+                </select>
+              </div>
+            </div>
+
+            <button type="submit" class="btn-submit">
+              Partnergesprek aanvragen →
+            </button>
+
+            <p class="form-footer-text">Binnen 1 werkdag reactie &nbsp;|&nbsp; Vrijblijvend gesprek &nbsp;|&nbsp; Gericht op jouw niche</p>
+          </form>
+          <div class="ghl-succes" style="display:none;"></div>
+          <div class="ghl-error" style="display:none; padding:12px; border-radius:8px; background:#fef2f2; color:#dc2626; font-size:.9rem; margin-top:12px;"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div style="margin-bottom:16px;display:block"><img src="/logo-donker.svg" alt="Starleads.nl" height="40" style="display:block" loading="lazy"></div>
+        <p class="footer-desc">Wij koppelen huiseigenaren aan gecertificeerde installateurs voor zonnepanelen, warmtepompen, laadpalen en meer. Gratis, snel en betrouwbaar.</p>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col-title">Navigatie</p>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/#diensten">Diensten</a></li>
+          <li><a href="/#how-it-works">Hoe het werkt</a></li>
+          <li><a href="/#reviews">Reviews</a></li>
+          <li><a href="/steden">Steden</a></li>
+          <li><a href="/voor-installateurs">Voor installateurs</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col-title">Voor installateurs</p>
+        <ul>
+          <li><a href="#partnerformulier">Partner worden</a></li>
+          <li><a href="#calcCard">Bereken je extra omzet</a></li>
+          <li><a href="/steden">Regio's bekijken</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col-title">Contact</p>
+        <div class="footer-contact-item">
+          <span style="opacity:.4">Tel</span><a href="tel:0640997278" style="color:rgba(255,255,255,.55)">06-40997278</a>
+        </div>
+        <div class="footer-contact-item">
+          <span style="opacity:.4">Mail</span><a href="mailto:partners@starleads.nl" style="color:rgba(255,255,255,.55)">partners@starleads.nl</a>
+        </div>
+        <div class="footer-contact-item">
+          <span style="opacity:.4">Tijd</span><span>Ma t/m Vr: 08:30 tot 17:00</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2026 Starleads.nl &nbsp;|&nbsp; Alle rechten voorbehouden</p>
+      <div class="footer-legal">
+        <span>KVK: 92026370</span>
+        <span>BTW: NL004931887B96</span>
+        <a href="#" style="color:rgba(255,255,255,.55)">Privacy</a>
+        <a href="#" style="color:rgba(255,255,255,.55)">Voorwaarden</a>
+      </div>
+      <div class="footer-keurmerken">
+        
+        <span class="keurmerk">SSL Beveiligd</span>
+        <span class="keurmerk">AVG Compliant</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Mobile sticky CTA -->
+<div class="mobile-cta" onclick="document.getElementById('partnerformulier').scrollIntoView({behavior:'smooth'})">
+  Partnergesprek aanvragen
+</div>
+
+<!-- ===== JAVASCRIPT ===== -->
+<script>
+  // ── Scroll naar top bij laden ──
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  window.scrollTo(0, 0);
+
+  // ── Navbar scroll ──
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 20);
+  }, { passive: true });
+
+  // ── Hamburger ──
+  // ── Nav dropdowns — JS only, geen CSS hover ──
+  (function() {
+    var dropdowns = document.querySelectorAll('.dropdown');
+    dropdowns.forEach(function(dd) {
+      var menu  = dd.querySelector('.dropdown-menu');
+      var arrow = dd.querySelector('.dropdown-arrow');
+      var timer;
+      if (!menu) return;
+
+      function open() {
+        clearTimeout(timer);
+        dropdowns.forEach(function(other) {
+          if (other !== dd) {
+            var m = other.querySelector('.dropdown-menu');
+            var a = other.querySelector('.dropdown-arrow');
+            if (m) m.classList.remove('show');
+            if (a) a.classList.remove('open');
+          }
+        });
+        menu.classList.add('show');
+        if (arrow) arrow.classList.add('open');
+      }
+      function close() {
+        timer = setTimeout(function() {
+          menu.classList.remove('show');
+          if (arrow) arrow.classList.remove('open');
+        }, 150);
+      }
+
+      dd.addEventListener('mouseenter', open);
+      dd.addEventListener('mouseleave', close);
+      menu.addEventListener('mouseenter', function() { clearTimeout(timer); });
+      menu.addEventListener('mouseleave', close);
+
+      var trigger = dd.querySelector('.nav-link');
+      if (trigger) {
+        trigger.addEventListener('click', function(e) {
+          if (window.innerWidth < 768) {
+            e.preventDefault();
+            dd.classList.toggle('mobile-open');
+          }
+        });
+      }
+    });
+
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.dropdown')) {
+        dropdowns.forEach(function(dd) {
+          var m = dd.querySelector('.dropdown-menu');
+          var a = dd.querySelector('.dropdown-arrow');
+          if (m) m.classList.remove('show');
+          if (a) a.classList.remove('open');
+        });
+      }
+    });
+  })();
+
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  let menuOpen = false;
+
+  hamburger.addEventListener('click', () => {
+    menuOpen = !menuOpen;
+    mobileMenu.style.display = menuOpen ? 'flex' : 'none';
+    const spans = hamburger.querySelectorAll('span');
+    if (menuOpen) {
+      spans[0].style.transform = 'rotate(45deg) translate(5px,5px)';
+      spans[1].style.opacity = '0';
+      spans[2].style.transform = 'rotate(-45deg) translate(5px,-5px)';
+    } else {
+      spans.forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
+    }
+  });
+
+  mobileMenu.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      menuOpen = false;
+      mobileMenu.style.display = 'none';
+      hamburger.querySelectorAll('span').forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
+    });
+  });
+
+  // ── CRM API ──
+  const CRM_API_URL = '/api/submit';
+
+  async function submitPartnerFormulier(event) {
+    event.preventDefault();
+    const form = event.target;
+    const fld  = id => { const el = document.getElementById(id); return el ? el.value.trim() : ''; };
+    const btn  = form.querySelector('[type="submit"]');
+    const wrap = document.getElementById('partnerFormWrap');
+    const successEl = wrap.querySelector('.ghl-succes');
+    const errorEl   = wrap.querySelector('.ghl-error');
+
+    const ids = ['pf-bedrijf','pf-voornaam','pf-achternaam','pf-email','pf-telefoon','pf-spec','pf-werkgebied','pf-leads','pf-planning'];
+    let valid = true;
+    ids.forEach(id => {
+      const el = document.getElementById(id);
+      if (!el || !el.value.trim()) {
+        if (el) { el.style.borderColor = '#ef4444'; el.style.boxShadow = '0 0 0 3px rgba(239,68,68,.12)'; }
+        valid = false;
+        setTimeout(() => { if (el) { el.style.borderColor = ''; el.style.boxShadow = ''; } }, 2500);
+      }
+    });
+    if (!valid) return;
+
+    btn.disabled = true;
+    btn.textContent = 'Bezig met verzenden…';
+    errorEl.style.display = 'none';
+
+    const payload = {
+      type: 'installateur',
+      naam: fld('pf-voornaam') + ' ' + fld('pf-achternaam'),
+      voornaam: fld('pf-voornaam'),
+      achternaam: fld('pf-achternaam'),
+      email: fld('pf-email'),
+      telefoon: fld('pf-telefoon'),
+      bedrijfsnaam: fld('pf-bedrijf'),
+      specialisatie: fld('pf-spec'),
+      werkgebied: fld('pf-werkgebied'),
+      bericht: 'Leads/maand: ' + fld('pf-leads') + '. Planning: ' + fld('pf-planning'),
+    };
+
+    try {
+      const res  = await fetch(CRM_API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || 'API fout');
+      if(typeof gtag==='function'){gtag('event','generate_lead',{event_category:'consument',value:1,currency:'EUR'});}
+
+      // Bevestigingsbericht tonen
+      document.getElementById('partnerForm').style.display = 'none';
+      successEl.innerHTML = `
+        <div style="text-align:center;padding:40px 20px;">
+          <div style="width:72px;height:72px;background:#f0faf5;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:2rem;"></div>
+          <h3 style="font-size:1.35rem;font-weight:800;color:#152e1a;margin-bottom:10px;">Aanvraag ontvangen!</h3>
+          <p style="color:#374151;font-size:.95rem;line-height:1.6;margin-bottom:8px;">
+            Bedankt voor jouw partneraanvraag, <strong>${fld('pf-voornaam')}</strong>.<br>
+            Wij nemen zo snel mogelijk — maar uiterlijk binnen <strong>1 werkdag</strong> — persoonlijk contact met je op.
+          </p>
+          <p style="color:#6b7280;font-size:.85rem;margin-top:16px;">
+            📞 Liever direct contact? Bel <a href="tel:0640997278" style="color:#00bf69;font-weight:700;">06-40997278</a>
+          </p>
+        </div>`;
+      successEl.style.display = 'block';
+
+    } catch (err) {
+      btn.disabled = false;
+      btn.textContent = 'Partnergesprek aanvragen →';
+      errorEl.innerHTML = 'Er ging iets mis. Bel ons direct op <a href="tel:0640997278" style="color:#dc2626;font-weight:600">06-40997278</a>';
+      errorEl.style.display = 'block';
+    }
+  }
+
+  // ── CountUp ──
+  function countUp(el) {
+    const target = parseFloat(el.dataset.target);
+    const suffix = el.dataset.suffix || '';
+    const dur = 1600;
+    const start = performance.now();
+    const isDecimal = String(target).includes('.');
+    function tick(now) {
+      const p = Math.min((now - start) / dur, 1);
+      const ease = 1 - Math.pow(1 - p, 3);
+      const val = target * ease;
+      el.textContent = (isDecimal ? val.toFixed(1) : Math.floor(val)) + suffix;
+      if (p < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+
+  // ── CALCULATOR ──
+  const steps = [
+    {
+      id: 'stap1',
+      question: 'Hoeveel installaties doe jij gemiddeld per maand?',
+      choices: [
+        { label: '1 tot 5',   sub: 'Kleine volume',    val: 3  },
+        { label: '6 tot 15',  sub: 'Gemiddeld',        val: 10 },
+        { label: '16 tot 30', sub: 'Groeiend bedrijf', val: 23 },
+        { label: '30+',  sub: 'Grote volume',     val: 40 },
+      ],
+    },
+    {
+      id: 'stap2',
+      question: 'Wat is jouw gemiddelde omzet per installatie?',
+      choices: [
+        { label: '€2.000 tot €5.000',   sub: 'Kleinere projecten',  val: 3500  },
+        { label: '€5.000 tot €10.000',  sub: 'Gemiddelde projecten', val: 7500  },
+        { label: '€10.000 tot €20.000', sub: 'Grotere projecten',    val: 15000 },
+        { label: '€20.000+',        sub: 'Groot formaat',        val: 25000 },
+      ],
+    },
+    {
+      id: 'stap3',
+      question: 'Hoeveel nieuwe klanten wil jij er per maand bij?',
+      choices: [
+        { label: '+2',   sub: 'Rustig opbouwen', val: 2  },
+        { label: '+5',   sub: 'Stabiele groei',  val: 5  },
+        { label: '+10',  sub: 'Forse groei',     val: 10 },
+        { label: '+15+', sub: 'Maximale groei',  val: 15 },
+      ],
+    },
+    {
+      id: 'stap4',
+      question: 'Wat is jouw huidige conversie van afspraak naar installatie?',
+      subtitle: 'Van 100 afspraken, hoeveel worden er gemiddeld een installatie?',
+      choices: [
+        { label: '15% tot 25%', sub: 'Gemiddeld in de markt',    val: 20 },
+        { label: '25% tot 40%', sub: 'Boven gemiddeld',          val: 32 },
+        { label: '40% tot 60%', sub: 'Sterk resultaat',          val: 50 },
+        { label: '60%+',       sub: 'Uitstekend',               val: 65 },
+      ],
+    },
+    {
+      id: 'stap5',
+      question: 'Wat is jouw specialisatie?',
+      cols: 'cols-6',
+      choices: [
+        { label: 'Zonnepanelen',  val: 'Zonnepanelen'  },
+        { label: 'Warmtepomp',    val: 'Warmtepomp'    },
+        { label: 'Laadpaal',      val: 'Laadpaal'      },
+        { label: 'Thuisbatterij', val: 'Thuisbatterij' },
+        { label: 'Airco',          val: 'Airco'         },
+        { label: 'Isolatie',       val: 'Isolatie'      },
+      ],
+    },
+  ];
+
+  let currentStep = 0;
+  const answers = [null, null, null, null, []];
+
+  function updateProgress() {
+    const pct = ((currentStep + 1) / steps.length) * 100;
+    document.getElementById('progressBar').style.width = pct + '%';
+
+    // Stap label
+    if (currentStep < steps.length) {
+      document.getElementById('stepLabel').textContent = `Vraag ${currentStep + 1} van ${steps.length}`;
+    }
+
+    // Dots
+    const dots = document.querySelectorAll('.calc-dot');
+    dots.forEach((d, i) => {
+      d.classList.remove('active', 'done');
+      if (i < currentStep) d.classList.add('done');
+      if (i === currentStep) d.classList.add('active');
+    });
+  }
+
+  function fmt(n) {
+    return n.toLocaleString('nl-NL');
+  }
+
+  function renderStep() {
+    if (currentStep >= steps.length) {
+      showResult();
+      return;
+    }
+
+    updateProgress();
+    const step = steps[currentStep];
+    const content = document.getElementById('calcStepContent');
+
+    const isMulti = currentStep === 4;
+    const tilesHtml = step.choices.map((c, i) => {
+      const sel = isMulti ? answers[4].includes(i) : answers[currentStep] === i;
+      return `
+      <button class="choice-tile${sel ? ' selected' : ''}"
+        data-idx="${i}" data-val="${c.val}">
+        ${c.icon ? `<span class="choice-tile-icon"></span>` : ''}
+        <span class="choice-tile-label">${c.label}</span>
+        ${c.sub ? `<span class="choice-tile-sub">${c.sub}</span>` : ''}
+      </button>`;
+    }).join('');
+
+    const isFirst = currentStep === 0;
+
+    content.innerHTML = `
+      <div class="calc-inner">
+        <p class="calc-question">${step.question}</p>
+        ${step.subtitle ? `<p style="font-size:.85rem;color:var(--gray-500);margin-top:-12px;margin-bottom:16px;line-height:1.5">${step.subtitle}</p>` : ''}
+        <div class="choice-grid ${step.cols || ''}">
+          ${tilesHtml}
+        </div>
+        <div class="calc-nav">
+          ${!isFirst ? `<button class="btn-calc-back" id="btnBack">← Terug</button>` : ''}
+          <button class="btn-calc-next" id="btnNext" ${isMulti ? (answers[4].length === 0 ? 'disabled' : '') : (answers[currentStep] === null ? 'disabled' : '')}>
+            ${currentStep < steps.length - 1 ? 'Volgende →' : 'Bekijk resultaat →'}
+          </button>
+        </div>
+      </div>
+    `;
+
+    // Tile click
+    content.querySelectorAll('.choice-tile').forEach(tile => {
+      tile.addEventListener('click', () => {
+        const idx = +tile.dataset.idx;
+        if (isMulti) {
+          // Toggle multi-select for step 5
+          const pos = answers[4].indexOf(idx);
+          if (pos === -1) {
+            answers[4].push(idx);
+            tile.classList.add('selected');
+          } else {
+            answers[4].splice(pos, 1);
+            tile.classList.remove('selected');
+          }
+          document.getElementById('btnNext').disabled = answers[4].length === 0;
+        } else {
+          // Single-select for all other steps
+          content.querySelectorAll('.choice-tile').forEach(t => t.classList.remove('selected'));
+          tile.classList.add('selected');
+          answers[currentStep] = idx;
+          document.getElementById('btnNext').disabled = false;
+        }
+      });
+    });
+
+    // Next
+    document.getElementById('btnNext').addEventListener('click', () => {
+      if (answers[currentStep] === null) return;
+      currentStep++;
+      renderStep();
+    });
+
+    // Back
+    if (!isFirst) {
+      document.getElementById('btnBack').addEventListener('click', () => {
+        currentStep--;
+        renderStep();
+      });
+    }
+  }
+
+  function animateResultNum(el, target, prefix, suffix) {
+    const isFloat = !Number.isInteger(target);
+    const dur = 1200;
+    const start = performance.now();
+    function tick(now) {
+      const p = Math.min((now - start) / dur, 1);
+      const ease = 1 - Math.pow(1 - p, 3);
+      const val = target * ease;
+      const formatted = prefix + fmt(isFloat ? +val.toFixed(0) : Math.floor(val)) + suffix;
+      el.textContent = formatted;
+      if (p < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+
+  function showResult() {
+    const installaties        = steps[0].choices[answers[0]].val;
+    const omzetPerInstallatie = steps[1].choices[answers[1]].val;
+    const nieuweKlanten       = steps[2].choices[answers[2]].val;
+    const conversiePct        = steps[3].choices[answers[3]].val;  // e.g. 15
+    const specialisatie       = answers[4].map(i => steps[4].choices[i].val).join(', ');
+
+    const benodigdeAfspraken = Math.ceil(nieuweKlanten / (conversiePct / 100));
+    const extraOmzetMaand    = nieuweKlanten * omzetPerInstallatie;
+    const extraWinstMaand    = Math.round(extraOmzetMaand * 0.20);
+    const extraOmzetJaar     = extraOmzetMaand * 12;
+    const extraWinstJaar     = extraWinstMaand * 12;
+
+    // Conversie tip
+    let tip = '';
+    if (conversiePct < 20) {
+      tip = 'Tip: Met betere kwaliteit afspraken kan jouw conversie snel stijgen naar 25%+';
+    } else if (conversiePct < 35) {
+      tip = 'Goede conversie! Met meer afspraken groeit jouw omzet direct.';
+    } else {
+      tip = 'Uitstekende conversie! U heeft vooral meer kwalitatieve afspraken nodig.';
+    }
+
+    // Full progress bar
+    document.getElementById('progressBar').style.width = '100%';
+    document.getElementById('stepLabel').textContent = 'Jouw resultaat';
+    document.querySelectorAll('.calc-dot').forEach(d => {
+      d.classList.remove('active');
+      d.classList.add('done');
+    });
+
+    const content = document.getElementById('calcStepContent');
+    content.innerHTML = `
+      <div class="calc-result">
+        <div class="result-header">
+          <p class="result-eyebrow">Jouw groeipotentieel per maand</p>
+          <p class="result-title">Gebaseerd op jouw situatie</p>
+        </div>
+
+        <div class="result-cards">
+          <div class="result-card">
+            <p class="result-card-label">Extra installaties<br>per maand</p>
+            <p class="result-card-val" id="rc-inst">0</p>
+          </div>
+          <div class="result-card">
+            <p class="result-card-label">Benodigde afspraken<br>per maand</p>
+            <p class="result-card-val" id="rc-afspraken">0</p>
+          </div>
+          <div class="result-card conv">
+            <p class="result-card-label">Jouw conversiepercentage</p>
+            <p class="result-card-val" id="rc-conv">0%</p>
+            <p class="result-card-sub">Van afspraak naar installatie</p>
+          </div>
+        </div>
+
+        <p class="conversion-tip">${tip}</p>
+
+        <div class="result-cards-row2">
+          <div class="result-card light">
+            <p class="result-card-label">Extra omzet<br>per maand</p>
+            <p class="result-card-val small" id="rc-omzet-maand">€0</p>
+          </div>
+          <div class="result-card light">
+            <p class="result-card-label">Extra winst<br>per maand <span style="font-size:.65rem;opacity:.7">(20% marge)</span></p>
+            <p class="result-card-val small" id="rc-winst-maand">€0</p>
+          </div>
+        </div>
+
+        <div class="result-annual-block">
+          <div class="annual-item">
+            <p class="annual-label">Extra jaaromzet</p>
+            <p class="annual-val" id="rc-omzet-jaar">€0</p>
+          </div>
+          <div class="annual-item">
+            <p class="annual-label">Extra jaarwinst</p>
+            <p class="annual-val" id="rc-winst-jaar">€0</p>
+          </div>
+        </div>
+
+        <p class="result-sub" style="margin-bottom:16px">
+          Op basis van jouw specialisatie (<strong>${specialisatie}</strong>) en ${installaties} installaties per maand
+          zien we ruimte voor flinke groei in jouw regio. Met een conversie van ${conversiePct}% heb je
+          <strong>${benodigdeAfspraken} afspraken per maand</strong> nodig om +${nieuweKlanten} installaties te realiseren.
+        </p>
+
+        <a href="#partnerformulier" class="btn-result-cta">Claim jouw afspraken →</a>
+        <button class="btn-reset" id="btnReset">↩ Herbereken</button>
+      </div>
+    `;
+
+    // CountUp animations
+    animateResultNum(document.getElementById('rc-inst'),        nieuweKlanten,       '+', '');
+    animateResultNum(document.getElementById('rc-afspraken'),   benodigdeAfspraken,  '',  '');
+    animateResultNum(document.getElementById('rc-conv'),        conversiePct,        '',  '%');
+    animateResultNum(document.getElementById('rc-omzet-maand'), extraOmzetMaand,     '€', '');
+    animateResultNum(document.getElementById('rc-winst-maand'), extraWinstMaand,     '€', '');
+    animateResultNum(document.getElementById('rc-omzet-jaar'),  extraOmzetJaar,      '€', '');
+    animateResultNum(document.getElementById('rc-winst-jaar'),  extraWinstJaar,      '€', '');
+
+    document.getElementById('btnReset').addEventListener('click', () => {
+      currentStep = 0;
+      answers[0] = null; answers[1] = null; answers[2] = null; answers[3] = null; answers[4] = [];
+      renderStep();
+    });
+  }
+
+  // Init calculator
+  renderStep();
+
+  // ── GSAP ──
+  var VI_TARGETS = '#heroText, #calcCard, #voordelenGrid .voordeel-card, #stepsGrid .step-card, #reviewsGrid .review-card, .partner-left, .partner-form-card, .fade-up';
+
+  if (window.innerWidth <= 900) {
+    // ── MOBIEL: geen GSAP — alles direct zichtbaar ──
+    document.querySelectorAll(VI_TARGETS).forEach(function(el) {
+      el.style.opacity = '1';
+      el.style.transform = 'none';
+    });
+
+    // Stats CountUp via IntersectionObserver
+    if ('IntersectionObserver' in window) {
+      var statsObs = new IntersectionObserver(function(entries) {
+        if (entries[0].isIntersecting) {
+          document.querySelectorAll('[data-target]').forEach(el => countUp(el));
+          statsObs.disconnect();
+        }
+      }, { threshold: 0.1 });
+      var statsBar = document.querySelector('.stats-bar');
+      if (statsBar) statsObs.observe(statsBar);
+    }
+
+  } else {
+    // ── DESKTOP: GSAP scroll-animaties ──
+    gsap.registerPlugin(ScrollTrigger);
+
+    gsap.from('#heroText', { opacity: 0, x: -40, duration: .8, ease: 'power2.out', delay: .15 });
+    gsap.from('#calcCard',  { opacity: 0, x:  40, duration: .8, ease: 'power2.out', delay: .25 });
+
+    // Stats CountUp
+    ScrollTrigger.create({
+      trigger: '.stats-bar',
+      start: 'top 85%',
+      once: true,
+      onEnter: () => document.querySelectorAll('[data-target]').forEach(el => countUp(el)),
+    });
+
+    // Voordelen
+    gsap.from('#voordelenGrid .voordeel-card', {
+      scrollTrigger: { trigger: '#voordelenGrid', start: 'top 80%' },
+      opacity: 0, y: 36, duration: .55, ease: 'power2.out', stagger: .1,
+    });
+
+    // Steps
+    gsap.from('#stepsGrid .step-card', {
+      scrollTrigger: { trigger: '#stepsGrid', start: 'top 80%' },
+      opacity: 0, y: 36, duration: .55, ease: 'power2.out', stagger: .15,
+    });
+
+    // Reviews
+    gsap.from('#reviewsGrid .review-card', {
+      scrollTrigger: { trigger: '#reviewsGrid', start: 'top 82%' },
+      opacity: 0, y: 32, duration: .6, ease: 'power2.out', stagger: .15,
+    });
+
+    // Partner form
+    gsap.from('.partner-left',     { scrollTrigger: { trigger: '.partner-inner', start: 'top 80%' }, opacity: 0, x: -40, duration: .7, ease: 'power2.out' });
+    gsap.from('.partner-form-card',{ scrollTrigger: { trigger: '.partner-inner', start: 'top 80%' }, opacity: 0, x:  40, duration: .7, ease: 'power2.out', delay: .1 });
+
+    // Generic fade-ups
+    gsap.utils.toArray('.fade-up').forEach(el => {
+      if (el.closest('#voordelenGrid') || el.closest('#stepsGrid') || el.closest('#reviewsGrid') || el.closest('.partner-left') || el.closest('.partner-form-card')) return;
+      gsap.from(el, {
+        scrollTrigger: { trigger: el, start: 'top 87%' },
+        opacity: 0, y: 28, duration: .6, ease: 'power2.out',
+      });
+    });
+  }
+
+  // ── ROI Calculator ──
+  function fmt(n) { return Math.round(n).toLocaleString('nl-NL'); }
+  function pct(val, min, max) { return ((val - min) / (max - min) * 100).toFixed(1) + '%'; }
+
+  let activeDienst = 'zonnepanelen';
+
+  // ─── ZONNEPANELEN ────────────────────────────────────────────────────────────
+  const zonState = { systeem: 6, kosten: 7500, tarief: 0.28, maand: 120, dak: 'zuid' };
+  const systeemOpties = [
+    { kw: 3,  label: '3 kW',  sub: '1 tot 2 pers', prijs: 4500  },
+    { kw: 4,  label: '4 kW',  sub: '2 tot 3 pers', prijs: 5500  },
+    { kw: 6,  label: '6 kW',  sub: '3 tot 4 pers', prijs: 7500  },
+    { kw: 8,  label: '8 kW',  sub: '4+ pers',  prijs: 10000 },
+    { kw: 10, label: '10 kW', sub: '5+ pers',  prijs: 13000 },
+  ];
+  const dakOpties = [
+    { key: 'zuid',       label: 'Zuid',      eff: 100, desc: '100% efficiënt' },
+    { key: 'zo-zw',      label: 'ZO / ZW',   eff: 90,  desc: '90% efficiënt'  },
+    { key: 'oost-west',  label: 'Oost/West', eff: 75,  desc: '75% efficiënt'  },
+    { key: 'noord',      label: 'Noord',      eff: 55,  desc: '55% efficiënt'  },
+  ];
+  function zonBesparing(s) {
+    const eff = (dakOpties.find(d => d.key === s.dak) || { eff: 100 }).eff / 100;
+    return Math.round(Math.min(s.systeem * 875 * eff, (s.maand * 12) / s.tarief) * s.tarief);
+  }
+  function renderZonnepanelen() {
+    const s = zonState;
+    const bes = zonBesparing(s);
+    const tv  = s.kosten / bes;
+    const bes25 = Math.max(0, bes * 25 - s.kosten);
+    return `
+      <p class="calc-section-label">Systeemgrootte</p>
+      <div class="systeem-grid" id="systeemGrid">
+        ${systeemOpties.map(o => `<button class="systeem-card${s.systeem===o.kw?' active':''}" data-kw="${o.kw}" data-prijs="${o.prijs}">
+          <div class="systeem-kw">${o.label}</div><div class="systeem-sub">${o.sub}</div><div class="systeem-prijs">€${fmt(o.prijs)}</div>
+        </button>`).join('')}
+      </div>
+      <div class="calc-inputs-row">
+        <div><label class="calc-input-label">Systeemkosten (€)</label>
+          <input class="form-control" type="number" id="zon-kosten" value="${s.kosten}" min="1000" max="30000" step="100"/>
+          <p class="calc-input-hint">Automatisch ingevuld, of overschrijf</p></div>
+        <div><label class="calc-input-label">Stroomtarief (€/kWh)</label>
+          <input class="form-control" type="number" id="zon-tarief" value="${s.tarief}" min="0.05" max="0.80" step="0.01"/>
+          <p class="calc-input-hint">Gem. 2026: €0,28/kWh</p></div>
+        <div><label class="calc-input-label">Maandrekening (€)</label>
+          <input class="form-control" type="number" id="zon-maand" value="${s.maand}" min="20" max="400" step="10"/>
+          <p class="calc-input-hint">Gem. huishouden: €80 tot €150/mnd</p></div>
+      </div>
+      <p class="calc-section-label">Dakoriëntatie</p>
+      <div class="dak-grid" id="dakGrid">
+        ${dakOpties.map(o => `<button class="dak-card${s.dak===o.key?' active':''}" data-dak="${o.key}">
+          <div class="dak-label">${o.label}</div><div class="dak-desc">${o.desc}</div>
+        </button>`).join('')}
+      </div>
+      <div class="calc-highlight">
+        <div class="calc-highlight-val" id="zon-hl">€ ${fmt(bes25)}</div>
+        <div class="calc-highlight-lbl">Totale besparing over 25 jaar</div>
+      </div>
+      <div class="calc-results"><div class="calc-results-grid">
+        <div><p class="result-label">Jaarlijkse besparing</p><p class="result-val" id="zon-res-bes">€ ${fmt(bes)}</p></div>
+        <div><p class="result-label">Terugverdientijd</p><p class="result-val dark" id="zon-res-tv">${Math.floor(tv)} tot ${Math.ceil(tv+1)} jaar</p></div>
+        <div><p class="result-label">Besparing over 25 jaar</p><p class="result-val" id="zon-res-25">€ ${fmt(bes25)}</p></div>
+      </div></div>
+      <a href="#partnerformulier" class="calc-cta-btn">Word partner en bied dit aan →</a>
+      <p class="calc-disclaimer">Schattingen voor informatieve doeleinden. Neem contact op voor een offerte op maat.</p>`;
+  }
+  function updateZonResults() {
+    const s = zonState; const bes = zonBesparing(s);
+    const tv = s.kosten / bes; const bes25 = Math.max(0, bes * 25 - s.kosten);
+    document.getElementById('zon-res-bes').textContent = '€ ' + fmt(bes);
+    document.getElementById('zon-res-tv').textContent  = Math.floor(tv) + ' tot ' + Math.ceil(tv+1) + ' jaar';
+    document.getElementById('zon-res-25').textContent  = '€ ' + fmt(bes25);
+    document.getElementById('zon-hl').textContent      = '€ ' + fmt(bes25);
+  }
+
+  // ─── WARMTEPOMP ──────────────────────────────────────────────────────────────
+  const wpState = { gas: 1500, tarief: 1.20, type: 'hybride' };
+  function wpBesparing(s) {
+    const perc = s.type === 'hybride' ? 0.50 : 0.75;
+    return Math.round(s.gas * s.tarief * perc);
+  }
+  function renderWarmtepomp() {
+    const s = wpState;
+    const bes = wpBesparing(s);
+    const inv = s.type === 'hybride' ? 5500 : 12000;
+    const tv  = (bes > 0 ? inv / bes : 0);
+    const bes15 = bes * 15;
+    const gasPct = pct(s.gas, 500, 3000);
+    const tarPct = pct(s.tarief, 0.80, 2.00);
+    return `
+      <p class="calc-section-label">Type warmtepomp</p>
+      <div class="keuze-grid" id="wp-type-grid">
+        <button class="keuze-card${s.type==='hybride'?' active':''}" data-val="hybride">
+          <span class="keuze-card-label">Hybride</span>
+          <span class="keuze-card-sub">Samen met cv-ketel, 50% gasbesparing</span></button>
+        <button class="keuze-card${s.type==='volledig'?' active':''}" data-val="volledig">
+          <span class="keuze-card-label">Volledig elektrisch</span>
+          <span class="keuze-card-sub">Geheel zonder gas, 75% gasbesparing</span></button>
+      </div>
+      <div class="slider-group">
+        <div class="slider-top"><span class="slider-label">Huidig gasverbruik per jaar</span>
+          <span class="slider-value" id="wp-gas-val">${fmt(s.gas)} m³/jaar</span></div>
+        <input type="range" class="range-input" id="wp-gas" min="500" max="3000" step="100" value="${s.gas}" style="--pct:${gasPct}"/>
+        <div class="slider-minmax"><span>500 m³</span><span>3.000 m³</span></div>
+      </div>
+      <div class="slider-group">
+        <div class="slider-top"><span class="slider-label">Gastarief (€/m³)</span>
+          <span class="slider-value" id="wp-tar-val">€${s.tarief.toFixed(2)}/m³</span></div>
+        <input type="range" class="range-input" id="wp-tar" min="0.80" max="2.00" step="0.05" value="${s.tarief}" style="--pct:${tarPct}"/>
+        <div class="slider-minmax"><span>€0,80</span><span>€2,00</span></div>
+      </div>
+      <div class="calc-highlight">
+        <div class="calc-highlight-val" id="wp-hl">€ ${fmt(bes15)}</div>
+        <div class="calc-highlight-lbl">Totale besparing over 15 jaar &nbsp;|&nbsp; Investering terugverdiend in ${Math.ceil(tv)} jaar</div>
+      </div>
+      <div class="calc-results"><div class="calc-results-grid">
+        <div><p class="result-label">Gasbesparing per jaar</p><p class="result-val dark" id="wp-res-gas">${fmt(s.gas * (s.type==='hybride'?.5:.75))} m³</p></div>
+        <div><p class="result-label">Kostenbesparing per jaar</p><p class="result-val" id="wp-res-bes">€ ${fmt(bes)}</p></div>
+        <div><p class="result-label">Terugverdientijd</p><p class="result-val dark" id="wp-res-tv">${Math.floor(tv)} tot ${Math.ceil(tv+1)} jaar</p></div>
+        <div><p class="result-label">Investering</p><p class="result-val dark" id="wp-res-inv">€ ${fmt(inv)}</p></div>
+        <div><p class="result-label">Max. ISDE-subsidie</p><p class="result-val">€ 3.350</p></div>
+        <div><p class="result-label">Besparing over 15 jaar</p><p class="result-val" id="wp-res-15">€ ${fmt(bes15)}</p></div>
+      </div></div>
+      <a href="#partnerformulier" class="calc-cta-btn">Word partner en bied dit aan →</a>
+      <p class="calc-disclaimer">Schattingen voor informatieve doeleinden. Neem contact op voor een offerte op maat.</p>`;
+  }
+  function updateWpResults() {
+    const s = wpState; const bes = wpBesparing(s);
+    const inv = s.type === 'hybride' ? 5500 : 12000;
+    const tv = bes > 0 ? inv / bes : 0;
+    document.getElementById('wp-res-gas').textContent = fmt(s.gas * (s.type==='hybride'?.5:.75)) + ' m³';
+    document.getElementById('wp-res-bes').textContent = '€ ' + fmt(bes);
+    document.getElementById('wp-res-tv').textContent  = Math.floor(tv) + ' tot ' + Math.ceil(tv+1) + ' jaar';
+    document.getElementById('wp-res-inv').textContent = '€ ' + fmt(inv);
+    document.getElementById('wp-res-15').textContent  = '€ ' + fmt(bes * 15);
+    document.getElementById('wp-hl').textContent      = '€ ' + fmt(bes * 15);
+  }
+
+  // ─── LAADPAAL ────────────────────────────────────────────────────────────────
+  const lpState = { km: 15000, brandstof: 'benzine', prijs: 2.10 };
+  const lpPrijsConfig = {
+    benzine:    { min: 1.50, max: 2.80, step: 0.05, def: 2.10, label: 'Brandstofprijs (€/liter)' },
+    diesel:     { min: 1.20, max: 2.50, step: 0.05, def: 1.85, label: 'Brandstofprijs (€/liter)' },
+    elektrisch: { min: 0.40, max: 0.90, step: 0.05, def: 0.65, label: 'Publiek laadtarief (€/kWh)' },
+  };
+  function lpBesparing(s) {
+    let huidig;
+    if (s.brandstof === 'benzine')     huidig = Math.round(s.km / 14.3 * s.prijs);
+    else if (s.brandstof === 'diesel') huidig = Math.round(s.km / 18.2 * s.prijs);
+    else                               huidig = Math.round(s.km / 6.0  * s.prijs);
+    const thuis = Math.round(s.km / 6.0 * 0.32);
+    return { huidig, thuis, besparing: Math.max(0, huidig - thuis) };
+  }
+  function renderLaadpaal() {
+    const s = lpState; const r = lpBesparing(s);
+    const pc = lpPrijsConfig[s.brandstof];
+    const tv = r.besparing > 0 ? (1800 / r.besparing).toFixed(1) : 'n.v.t.';
+    const vijf = r.besparing * 5;
+    return `
+      <div class="slider-group">
+        <div class="slider-top"><span class="slider-label">Hoeveel kilometer rijdt u per jaar?</span>
+          <span class="slider-value" id="lp-km-val">${fmt(s.km)} km/jaar</span></div>
+        <input type="range" class="range-input" id="lp-km" min="5000" max="50000" step="1000" value="${s.km}" style="--pct:${pct(s.km,5000,50000)}"/>
+        <div class="slider-minmax"><span>5.000 km</span><span>50.000 km</span></div>
+      </div>
+      <p class="calc-section-label">Huidig vervoermiddel</p>
+      <div class="keuze-grid" id="lp-brandstof-grid">
+        <button class="keuze-card${s.brandstof==='benzine'?' active':''}" data-val="benzine">
+          <span class="keuze-card-label">Benzine</span><span class="keuze-card-sub">~€0,15/km</span></button>
+        <button class="keuze-card${s.brandstof==='diesel'?' active':''}" data-val="diesel">
+          <span class="keuze-card-label">Diesel</span><span class="keuze-card-sub">~€0,10/km</span></button>
+        <button class="keuze-card${s.brandstof==='elektrisch'?' active':''}" data-val="elektrisch">
+          <span class="keuze-card-label">Al elektrisch</span><span class="keuze-card-sub">Publiek vs. thuis</span></button>
+      </div>
+      <div class="slider-group">
+        <div class="slider-top"><span class="slider-label" id="lp-prijs-label">${pc.label}</span>
+          <span class="slider-value" id="lp-prijs-val">€${s.prijs.toFixed(2)}</span></div>
+        <input type="range" class="range-input" id="lp-prijs" min="${pc.min}" max="${pc.max}" step="${pc.step}" value="${s.prijs}" style="--pct:${pct(s.prijs,pc.min,pc.max)}"/>
+        <div class="slider-minmax" id="lp-prijs-mm"><span>€${pc.min.toFixed(2)}</span><span>€${pc.max.toFixed(2)}</span></div>
+      </div>
+      <div class="calc-highlight">
+        <div class="calc-highlight-val" id="lp-hl">€ ${fmt(vijf)}</div>
+        <div class="calc-highlight-lbl">U bespaart €${fmt(vijf)} in 5 jaar door thuis te laden</div>
+      </div>
+      <div class="calc-results"><div class="calc-results-grid" style="grid-template-columns:repeat(3,1fr)">
+        <div><p class="result-label">Huidige brandstofkosten</p><p class="result-val dark" id="lp-res-huidig">€ ${fmt(r.huidig)}</p></div>
+        <div><p class="result-label">Kosten thuis laden</p><p class="result-val dark" id="lp-res-thuis">€ ${fmt(r.thuis)}</p></div>
+        <div><p class="result-label">Jaarlijkse besparing</p><p class="result-val" id="lp-res-bes">€ ${fmt(r.besparing)}</p></div>
+        <div><p class="result-label">Terugverdientijd laadpaal</p><p class="result-val dark" id="lp-res-tv">${tv} jaar</p></div>
+        <div><p class="result-label">Besparing over 5 jaar</p><p class="result-val" id="lp-res-5jr">€ ${fmt(vijf)}</p></div>
+        <div><p class="result-label">Gem. investering laadpaal</p><p class="result-val dark">€ 1.800</p></div>
+      </div></div>
+      <a href="#partnerformulier" class="calc-cta-btn">Word partner en bied dit aan →</a>
+      <p class="calc-disclaimer">Schattingen voor informatieve doeleinden. Neem contact op voor een offerte op maat.</p>`;
+  }
+  function updateLpResults() {
+    const s = lpState; const r = lpBesparing(s);
+    const tv = r.besparing > 0 ? (1800 / r.besparing).toFixed(1) : 'n.v.t.';
+    const vijf = r.besparing * 5;
+    document.getElementById('lp-res-huidig').textContent = '€ ' + fmt(r.huidig);
+    document.getElementById('lp-res-thuis').textContent  = '€ ' + fmt(r.thuis);
+    document.getElementById('lp-res-bes').textContent    = '€ ' + fmt(r.besparing);
+    document.getElementById('lp-res-tv').textContent     = tv + ' jaar';
+    document.getElementById('lp-res-5jr').textContent    = '€ ' + fmt(vijf);
+    document.getElementById('lp-hl').textContent         = '€ ' + fmt(vijf);
+    document.querySelector('#lp-hl + .calc-highlight-lbl').textContent = 'U bespaart €' + fmt(vijf) + ' in 5 jaar door thuis te laden';
+  }
+
+  // ─── THUISBATTERIJ ───────────────────────────────────────────────────────────
+  const tbState = { panelen: 10, verbruik: 3500, tarief: 0.32 };
+  function tbBesparing(s) {
+    const opwek = s.panelen * 350;
+    const zonderBat = Math.round(opwek * 0.30);
+    const metBat    = Math.round(opwek * 0.75);
+    const extra     = metBat - zonderBat;
+    const besparing = Math.round(extra * s.tarief);
+    const inv = 6500;
+    return { opwek, zonderBat, metBat, extra, besparing, inv };
+  }
+  function renderThuisbatterij() {
+    const s = tbState; const r = tbBesparing(s);
+    const tv = r.besparing > 0 ? (r.inv / r.besparing).toFixed(1) : 'n.v.t.';
+    const tien = r.besparing * 10;
+    const tarifOpties = [
+      { val: 0.22, label: 'Laag', sub: '€0,22/kWh' },
+      { val: 0.32, label: 'Gemiddeld', sub: '€0,32/kWh' },
+      { val: 0.42, label: 'Hoog', sub: '€0,42/kWh' },
+    ];
+    return `
+      <div class="slider-group">
+        <div class="slider-top"><span class="slider-label">Hoeveel zonnepanelen heeft u (of wilt u)?</span>
+          <span class="slider-value" id="tb-pan-val">${s.panelen} panelen (~${fmt(r.opwek)} kWh/jaar opwek)</span></div>
+        <input type="range" class="range-input" id="tb-pan" min="4" max="20" step="1" value="${s.panelen}" style="--pct:${pct(s.panelen,4,20)}"/>
+        <div class="slider-minmax"><span>4 panelen</span><span>20 panelen</span></div>
+      </div>
+      <div class="slider-group">
+        <div class="slider-top"><span class="slider-label">Hoeveel stroom verbruikt u per jaar?</span>
+          <span class="slider-value" id="tb-ver-val">${fmt(s.verbruik)} kWh/jaar</span></div>
+        <input type="range" class="range-input" id="tb-ver" min="1500" max="8000" step="100" value="${s.verbruik}" style="--pct:${pct(s.verbruik,1500,8000)}"/>
+        <div class="slider-minmax"><span>1.500 kWh</span><span>8.000 kWh</span></div>
+      </div>
+      <p class="calc-section-label">Huidig stroomtarief</p>
+      <div class="keuze-grid" id="tb-tarief-grid">
+        ${tarifOpties.map(o => `<button class="keuze-card${s.tarief===o.val?' active':''}" data-val="${o.val}">
+          <span class="keuze-card-label">${o.label}</span>
+          <span class="keuze-card-sub">${o.sub}</span></button>`).join('')}
+      </div>
+      <div class="calc-highlight">
+        <div class="calc-highlight-val" id="tb-hl">75%</div>
+        <div class="calc-highlight-lbl">Je benut ${Math.round(r.metBat/r.opwek*100)}% meer van jouw zonne-energie (was 30%, nu 75%)</div>
+      </div>
+      <div class="calc-results"><div class="calc-results-grid" style="grid-template-columns:repeat(3,1fr)">
+        <div><p class="result-label">Eigenverbruik zonder batterij</p><p class="result-val dark" id="tb-res-zonder">${fmt(r.zonderBat)} kWh</p></div>
+        <div><p class="result-label">Eigenverbruik met batterij</p><p class="result-val" id="tb-res-met">${fmt(r.metBat)} kWh</p></div>
+        <div><p class="result-label">Extra benutting zonne-energie</p><p class="result-val" id="tb-res-extra">${fmt(r.extra)} kWh</p></div>
+        <div><p class="result-label">Jaarlijkse besparing</p><p class="result-val" id="tb-res-bes">€ ${fmt(r.besparing)}</p></div>
+        <div><p class="result-label">Terugverdientijd</p><p class="result-val dark" id="tb-res-tv">${tv} jaar</p></div>
+        <div><p class="result-label">Besparing over 10 jaar</p><p class="result-val" id="tb-res-10">€ ${fmt(tien)}</p></div>
+      </div></div>
+      <a href="#partnerformulier" class="calc-cta-btn">Word partner en bied dit aan →</a>
+      <p class="calc-disclaimer">Schattingen voor informatieve doeleinden. Neem contact op voor een offerte op maat.</p>`;
+  }
+  function updateTbResults() {
+    const s = tbState; const r = tbBesparing(s);
+    const tv = r.besparing > 0 ? (r.inv / r.besparing).toFixed(1) : 'n.v.t.';
+    document.getElementById('tb-pan-val').textContent  = s.panelen + ' panelen (~' + fmt(r.opwek) + ' kWh/jaar opwek)';
+    document.getElementById('tb-ver-val').textContent  = fmt(s.verbruik) + ' kWh/jaar';
+    document.getElementById('tb-res-zonder').textContent = fmt(r.zonderBat) + ' kWh';
+    document.getElementById('tb-res-met').textContent    = fmt(r.metBat) + ' kWh';
+    document.getElementById('tb-res-extra').textContent  = fmt(r.extra) + ' kWh';
+    document.getElementById('tb-res-bes').textContent    = '€ ' + fmt(r.besparing);
+    document.getElementById('tb-res-tv').textContent     = tv + ' jaar';
+    document.getElementById('tb-res-10').textContent     = '€ ' + fmt(r.besparing * 10);
+    document.getElementById('tb-hl').textContent         = '75%';
+    document.querySelector('#tb-hl + .calc-highlight-lbl').textContent = 'Je benut ' + Math.round(r.metBat/r.opwek*100) + '% meer van jouw zonne-energie (was 30%, nu 75%)';
+  }
+
+  // ─── AIRCO ───────────────────────────────────────────────────────────────────
+  const acState = { gebruik: 'koelen_verwarmen', m2: 60, verwarming: 'gas' };
+  function acBesparing(s) {
+    const gasKosten = s.m2 * 15 * 1.45;
+    const aircoStroom = s.m2 * 8 * 0.32;
+    const koelenJaar = s.m2 * 0.05 * 400 * 0.32;
+    if (s.gebruik === 'koelen') {
+      return { huidig: 0, nieuw: Math.round(koelenJaar), besparing: 0, inv: 2200, note: 'koelen' };
+    }
+    const besparing = Math.max(0, Math.round(gasKosten - aircoStroom));
+    const inv = s.gebruik === 'koelen_verwarmen' ? 2200 : 3500;
+    return { huidig: Math.round(gasKosten), nieuw: Math.round(aircoStroom + koelenJaar), besparing, inv, note: 'verwarmen' };
+  }
+  function renderAirco() {
+    const s = acState; const r = acBesparing(s);
+    const tv = r.besparing > 0 ? (r.inv / r.besparing).toFixed(1) : r.inv / 300 + '';
+    const gebruikOpties = [
+      { val: 'koelen',            label: 'Alleen koelen',       sub: 'Zomercomfort' },
+      { val: 'koelen_verwarmen',  label: 'Koelen én verwarmen', sub: 'Jaar-rond gebruik' },
+      { val: 'verwarmen',         label: 'Vooral verwarmen',     sub: 'Warmtepomp alternatief' },
+    ];
+    const verwarmingOpties = [
+      { val: 'gas',         label: 'Gasketel',   sub: '€1,45/m³' },
+      { val: 'elektrisch',  label: 'Elektrisch', sub: '€0,32/kWh' },
+    ];
+    return `
+      <p class="calc-section-label">Gebruik</p>
+      <div class="keuze-grid" id="ac-gebruik-grid">
+        ${gebruikOpties.map(o => `<button class="keuze-card${s.gebruik===o.val?' active':''}" data-val="${o.val}">
+          <span class="keuze-card-label">${o.label}</span>
+          <span class="keuze-card-sub">${o.sub}</span></button>`).join('')}
+      </div>
+      <div class="slider-group">
+        <div class="slider-top"><span class="slider-label">Hoeveel m² wilt u koelen/verwarmen?</span>
+          <span class="slider-value" id="ac-m2-val">${s.m2} m²</span></div>
+        <input type="range" class="range-input" id="ac-m2" min="20" max="150" step="5" value="${s.m2}" style="--pct:${pct(s.m2,20,150)}"/>
+        <div class="slider-minmax"><span>20 m²</span><span>150 m²</span></div>
+      </div>
+      ${s.gebruik !== 'koelen' ? `
+      <p class="calc-section-label">Hoe verwarmt u nu?</p>
+      <div class="keuze-grid" id="ac-verwarming-grid">
+        ${verwarmingOpties.map(o => `<button class="keuze-card${s.verwarming===o.val?' active':''}" data-val="${o.val}">
+          <span class="keuze-card-label">${o.label}</span>
+          <span class="keuze-card-sub">${o.sub}</span></button>`).join('')}
+      </div>` : ''}
+      <div class="calc-highlight">
+        <div class="calc-highlight-val" id="ac-hl">€ ${fmt(r.besparing || r.nieuw)}</div>
+        <div class="calc-highlight-lbl" id="ac-hl-lbl">${r.besparing > 0 ? 'Koelen én verwarmen voor €'+fmt(r.besparing)+' per jaar minder' : 'Koelkosten per jaar'}</div>
+      </div>
+      <div class="calc-results"><div class="calc-results-grid" style="grid-template-columns:repeat(3,1fr)">
+        <div><p class="result-label">Huidige verwarmingskosten</p><p class="result-val dark" id="ac-res-huidig">€ ${fmt(r.huidig)}/jaar</p></div>
+        <div><p class="result-label">Kosten met airco</p><p class="result-val dark" id="ac-res-nieuw">€ ${fmt(r.nieuw)}/jaar</p></div>
+        <div><p class="result-label">Jaarlijkse besparing</p><p class="result-val" id="ac-res-bes">€ ${fmt(r.besparing)}</p></div>
+        <div><p class="result-label">Investering</p><p class="result-val dark" id="ac-res-inv">€ ${fmt(r.inv)}</p></div>
+        <div><p class="result-label">Terugverdientijd</p><p class="result-val dark" id="ac-res-tv">${tv} jaar</p></div>
+        <div><p class="result-label">Koeling gratis erbij</p><p class="result-val">✓ Inbegrepen</p></div>
+      </div></div>
+      <a href="#partnerformulier" class="calc-cta-btn">Word partner en bied dit aan →</a>
+      <p class="calc-disclaimer">Schattingen voor informatieve doeleinden. Neem contact op voor een offerte op maat.</p>`;
+  }
+  function updateAcResults() {
+    const s = acState; const r = acBesparing(s);
+    const tv = r.besparing > 0 ? (r.inv / r.besparing).toFixed(1) : (r.inv / 300).toFixed(1);
+    document.getElementById('ac-m2-val').textContent     = s.m2 + ' m²';
+    document.getElementById('ac-res-huidig').textContent = '€ ' + fmt(r.huidig) + '/jaar';
+    document.getElementById('ac-res-nieuw').textContent  = '€ ' + fmt(r.nieuw) + '/jaar';
+    document.getElementById('ac-res-bes').textContent    = '€ ' + fmt(r.besparing);
+    document.getElementById('ac-res-inv').textContent    = '€ ' + fmt(r.inv);
+    document.getElementById('ac-res-tv').textContent     = tv + ' jaar';
+    document.getElementById('ac-hl').textContent         = '€ ' + fmt(r.besparing || r.nieuw);
+    document.getElementById('ac-hl-lbl').textContent     = r.besparing > 0 ? 'Koelen én verwarmen voor €'+fmt(r.besparing)+' per jaar minder' : 'Koelkosten per jaar';
+  }
+
+  // ─── ISOLATIE ────────────────────────────────────────────────────────────────
+  const isState = { type: 'spouwmuur', gasverbruik: 1800, ouderdom: 'voor1975' };
+  const isTypes = {
+    spouwmuur: { perc: 0.17, inv: 2500,   label: 'Spouwmuur',     sub: '~17% gasbesparing' },
+    dak:       { perc: 0.25, inv: 4500,   label: 'Dakisolatie',    sub: '~25% gasbesparing' },
+    vloer:     { perc: 0.12, inv: 3500,   label: 'Vloerisolatie',  sub: '~12% gasbesparing' },
+    glas:      { perc: 0.12, inv: 6000,   label: 'HR++ Glas',      sub: '~12% gasbesparing' },
+    alles:     { perc: 0.45, inv: 14000,  label: 'Alles tegelijk', sub: '~45% gasbesparing' },
+  };
+  const isOuderdom = { voor1975: 1.0, v1975_2000: 0.85, na2000: 0.65 };
+  function isBesparing(s) {
+    const t = isTypes[s.type];
+    const factor = isOuderdom[s.ouderdom] || 1.0;
+    const besPerc = t.perc * factor;
+    const gasKosten = s.gasverbruik * 1.45;
+    const besparing = Math.round(gasKosten * besPerc);
+    const gasRed = Math.round(s.gasverbruik * besPerc);
+    const co2 = Math.round(gasRed * 1.89);
+    const tv = besparing > 0 ? t.inv / besparing : 0;
+    const vijftien = besparing * 15;
+    return { gasKosten: Math.round(gasKosten), besparing, gasRed, co2, tv, vijftien, inv: t.inv, nieuw: Math.round(gasKosten - besparing) };
+  }
+  function renderIsolatie() {
+    const s = isState; const r = isBesparing(s);
+    const ouderdomOpties = [
+      { val: 'voor1975',    label: 'Vóór 1975',   sub: 'Slecht geïsoleerd'   },
+      { val: 'v1975_2000',  label: '1975 tot 2000', sub: 'Matig geïsoleerd'     },
+      { val: 'na2000',      label: 'Na 2000',     sub: 'Redelijk geïsoleerd'  },
+    ];
+    return `
+      <p class="calc-section-label">Type isolatie</p>
+      <div class="isol-type-grid" id="is-type-grid">
+        ${Object.entries(isTypes).map(([k, t]) => `<button class="keuze-card${s.type===k?' active':''}" data-val="${k}">
+          <span class="keuze-card-label">${t.label}</span>
+          <span class="keuze-card-sub">${t.sub}</span></button>`).join('')}
+      </div>
+      <div class="slider-group">
+        <div class="slider-top"><span class="slider-label">Huidig gasverbruik per jaar</span>
+          <span class="slider-value" id="is-gas-val">${fmt(s.gasverbruik)} m³/jaar</span></div>
+        <input type="range" class="range-input" id="is-gas" min="500" max="5000" step="100" value="${s.gasverbruik}" style="--pct:${pct(s.gasverbruik,500,5000)}"/>
+        <div class="slider-minmax"><span>500 m³</span><span>5.000 m³</span></div>
+      </div>
+      <p class="calc-section-label">Ouderdom woning</p>
+      <div class="keuze-grid" id="is-oud-grid">
+        ${ouderdomOpties.map(o => `<button class="keuze-card${s.ouderdom===o.val?' active':''}" data-val="${o.val}">
+          <span class="keuze-card-label">${o.label}</span>
+          <span class="keuze-card-sub">${o.sub}</span></button>`).join('')}
+      </div>
+      <div class="calc-highlight">
+        <div class="calc-highlight-val" id="is-hl">€ ${fmt(r.vijftien)}</div>
+        <div class="calc-highlight-lbl">U bespaart ${fmt(r.gasRed)} m³ gas én ${fmt(r.co2)} kg CO₂ per jaar</div>
+      </div>
+      <div class="calc-results"><div class="calc-results-grid" style="grid-template-columns:repeat(3,1fr)">
+        <div><p class="result-label">Huidige gaskosten</p><p class="result-val dark" id="is-res-huidig">€ ${fmt(r.gasKosten)}/jaar</p></div>
+        <div><p class="result-label">Besparing na isolatie</p><p class="result-val" id="is-res-bes">€ ${fmt(r.besparing)}/jaar</p></div>
+        <div><p class="result-label">Nieuwe gasrekening</p><p class="result-val dark" id="is-res-nieuw">€ ${fmt(r.nieuw)}/jaar</p></div>
+        <div><p class="result-label">Investering</p><p class="result-val dark" id="is-res-inv">€ ${fmt(r.inv)}</p></div>
+        <div><p class="result-label">Terugverdientijd</p><p class="result-val dark" id="is-res-tv">${r.tv > 0 ? r.tv.toFixed(1)+' jaar' : 'n.v.t.'}</p></div>
+        <div><p class="result-label">Besparing over 15 jaar</p><p class="result-val" id="is-res-15">€ ${fmt(r.vijftien)}</p></div>
+      </div></div>
+      <a href="#partnerformulier" class="calc-cta-btn">Word partner en bied dit aan →</a>
+      <p class="calc-disclaimer">Schattingen voor informatieve doeleinden. Neem contact op voor een offerte op maat.</p>`;
+  }
+  function updateIsResults() {
+    const s = isState; const r = isBesparing(s);
+    document.getElementById('is-gas-val').textContent    = fmt(s.gasverbruik) + ' m³/jaar';
+    document.getElementById('is-res-huidig').textContent = '€ ' + fmt(r.gasKosten) + '/jaar';
+    document.getElementById('is-res-bes').textContent    = '€ ' + fmt(r.besparing) + '/jaar';
+    document.getElementById('is-res-nieuw').textContent  = '€ ' + fmt(r.nieuw) + '/jaar';
+    document.getElementById('is-res-inv').textContent    = '€ ' + fmt(r.inv);
+    document.getElementById('is-res-tv').textContent     = r.tv > 0 ? r.tv.toFixed(1)+' jaar' : 'n.v.t.';
+    document.getElementById('is-res-15').textContent     = '€ ' + fmt(r.vijftien);
+    document.getElementById('is-hl').textContent         = '€ ' + fmt(r.vijftien);
+    document.querySelector('#is-hl + .calc-highlight-lbl').textContent = 'U bespaart ' + fmt(r.gasRed) + ' m³ gas én ' + fmt(r.co2) + ' kg CO₂ per jaar';
+  }
+
+  // ─── RENDER & BIND ───────────────────────────────────────────────────────────
+  const calcMeta = {
+    zonnepanelen:  { icon: '', label: 'Zonnepanelen',  badge: 'Gem. 2026 · €0,28/kWh',            render: renderZonnepanelen  },
+    warmtepomp:    { icon: '', label: 'Warmtepomp',    badge: 'Hybride of volledig elektrisch',     render: renderWarmtepomp    },
+    laadpaal:      { icon: '', label: 'Laadpaal',      badge: 'Bespaar vs. publiek laden',          render: renderLaadpaal      },
+    thuisbatterij: { icon: '', label: 'Thuisbatterij', badge: 'Rendement zonnepanelen verhogen',    render: renderThuisbatterij },
+    airco:         { icon: '', label: 'Airco',         badge: 'Koelen én verwarmen',                render: renderAirco         },
+    isolatie:      { icon: '', label: 'Isolatie',      badge: 'Minder energieverlies',              render: renderIsolatie      },
+  };
+
+  function renderCalc(dienst) {
+    const m = calcMeta[dienst];
+    const _hIcon = document.getElementById('calcHeaderIcon'); if(_hIcon) _hIcon.textContent = m.icon || '';
+    document.getElementById('calcHeaderTitle').textContent = m.label + ' Besparingsrekentool';
+    document.getElementById('calcHeaderBadge').textContent = m.badge;
+    document.getElementById('calcBody').innerHTML = m.render();
+    bindCalcEvents(dienst);
+  }
+
+  function bindCalcEvents(dienst) {
+    if (dienst === 'zonnepanelen') {
+      document.querySelectorAll('.systeem-card').forEach(btn => {
+        btn.addEventListener('click', () => {
+          zonState.systeem = +btn.dataset.kw; zonState.kosten = +btn.dataset.prijs;
+          document.getElementById('zon-kosten').value = btn.dataset.prijs;
+          document.querySelectorAll('.systeem-card').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active'); updateZonResults();
+        });
+      });
+      document.querySelectorAll('.dak-card').forEach(btn => {
+        btn.addEventListener('click', () => {
+          zonState.dak = btn.dataset.dak;
+          document.querySelectorAll('.dak-card').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active'); updateZonResults();
+        });
+      });
+      ['zon-kosten','zon-tarief','zon-maand'].forEach(id => {
+        document.getElementById(id).addEventListener('input', e => {
+          const key = {'zon-kosten':'kosten','zon-tarief':'tarief','zon-maand':'maand'}[id];
+          zonState[key] = parseFloat(e.target.value) || 0; updateZonResults();
+        });
+      });
+    } else if (dienst === 'warmtepomp') {
+      document.querySelectorAll('#wp-type-grid .keuze-card').forEach(btn => {
+        btn.addEventListener('click', () => {
+          wpState.type = btn.dataset.val;
+          document.querySelectorAll('#wp-type-grid .keuze-card').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active'); updateWpResults();
+        });
+      });
+      document.getElementById('wp-gas').addEventListener('input', e => {
+        wpState.gas = +e.target.value;
+        e.target.style.setProperty('--pct', pct(wpState.gas, 500, 3000));
+        document.getElementById('wp-gas-val').textContent = fmt(wpState.gas) + ' m³/jaar';
+        updateWpResults();
+      });
+      document.getElementById('wp-tar').addEventListener('input', e => {
+        wpState.tarief = +e.target.value;
+        e.target.style.setProperty('--pct', pct(wpState.tarief, 0.80, 2.00));
+        document.getElementById('wp-tar-val').textContent = '€' + wpState.tarief.toFixed(2) + '/m³';
+        updateWpResults();
+      });
+    } else if (dienst === 'laadpaal') {
+      document.getElementById('lp-km').addEventListener('input', e => {
+        lpState.km = +e.target.value;
+        e.target.style.setProperty('--pct', pct(lpState.km, 5000, 50000));
+        document.getElementById('lp-km-val').textContent = fmt(lpState.km) + ' km/jaar';
+        updateLpResults();
+      });
+      document.querySelectorAll('#lp-brandstof-grid .keuze-card').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const oud = lpState.brandstof; lpState.brandstof = btn.dataset.val;
+          if (oud !== lpState.brandstof) lpState.prijs = lpPrijsConfig[lpState.brandstof].def;
+          document.querySelectorAll('#lp-brandstof-grid .keuze-card').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const pc = lpPrijsConfig[lpState.brandstof];
+          const sl = document.getElementById('lp-prijs');
+          sl.min = pc.min; sl.max = pc.max; sl.step = pc.step; sl.value = lpState.prijs;
+          sl.style.setProperty('--pct', pct(lpState.prijs, pc.min, pc.max));
+          document.getElementById('lp-prijs-label').textContent = pc.label;
+          document.getElementById('lp-prijs-val').textContent = '€' + lpState.prijs.toFixed(2);
+          document.getElementById('lp-prijs-mm').innerHTML = '<span>€'+pc.min.toFixed(2)+'</span><span>€'+pc.max.toFixed(2)+'</span>';
+          updateLpResults();
+        });
+      });
+      document.getElementById('lp-prijs').addEventListener('input', e => {
+        lpState.prijs = +e.target.value;
+        const pc = lpPrijsConfig[lpState.brandstof];
+        e.target.style.setProperty('--pct', pct(lpState.prijs, pc.min, pc.max));
+        document.getElementById('lp-prijs-val').textContent = '€' + lpState.prijs.toFixed(2);
+        updateLpResults();
+      });
+    } else if (dienst === 'thuisbatterij') {
+      document.getElementById('tb-pan').addEventListener('input', e => {
+        tbState.panelen = +e.target.value;
+        e.target.style.setProperty('--pct', pct(tbState.panelen, 4, 20));
+        updateTbResults();
+      });
+      document.getElementById('tb-ver').addEventListener('input', e => {
+        tbState.verbruik = +e.target.value;
+        e.target.style.setProperty('--pct', pct(tbState.verbruik, 1500, 8000));
+        updateTbResults();
+      });
+      document.querySelectorAll('#tb-tarief-grid .keuze-card').forEach(btn => {
+        btn.addEventListener('click', () => {
+          tbState.tarief = +btn.dataset.val;
+          document.querySelectorAll('#tb-tarief-grid .keuze-card').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active'); updateTbResults();
+        });
+      });
+    } else if (dienst === 'airco') {
+      document.querySelectorAll('#ac-gebruik-grid .keuze-card').forEach(btn => {
+        btn.addEventListener('click', () => {
+          acState.gebruik = btn.dataset.val;
+          document.querySelectorAll('#ac-gebruik-grid .keuze-card').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          document.getElementById('calcBody').innerHTML = renderAirco();
+          bindCalcEvents('airco');
+        });
+      });
+      document.getElementById('ac-m2').addEventListener('input', e => {
+        acState.m2 = +e.target.value;
+        e.target.style.setProperty('--pct', pct(acState.m2, 20, 150));
+        document.getElementById('ac-m2-val').textContent = acState.m2 + ' m²';
+        updateAcResults();
+      });
+      const vGrid = document.getElementById('ac-verwarming-grid');
+      if (vGrid) vGrid.querySelectorAll('.keuze-card').forEach(btn => {
+        btn.addEventListener('click', () => {
+          acState.verwarming = btn.dataset.val;
+          vGrid.querySelectorAll('.keuze-card').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active'); updateAcResults();
+        });
+      });
+    } else if (dienst === 'isolatie') {
+      document.querySelectorAll('#is-type-grid .keuze-card').forEach(btn => {
+        btn.addEventListener('click', () => {
+          isState.type = btn.dataset.val;
+          document.querySelectorAll('#is-type-grid .keuze-card').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active'); updateIsResults();
+        });
+      });
+      document.getElementById('is-gas').addEventListener('input', e => {
+        isState.gasverbruik = +e.target.value;
+        e.target.style.setProperty('--pct', pct(isState.gasverbruik, 500, 5000));
+        updateIsResults();
+      });
+      document.querySelectorAll('#is-oud-grid .keuze-card').forEach(btn => {
+        btn.addEventListener('click', () => {
+          isState.ouderdom = btn.dataset.val;
+          document.querySelectorAll('#is-oud-grid .keuze-card').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active'); updateIsResults();
+        });
+      });
+    }
+  }
+
+  document.getElementById('calcTabs').addEventListener('click', e => {
+    const btn = e.target.closest('.calc-tab');
+    if (!btn) return;
+    activeDienst = btn.dataset.dienst;
+    document.querySelectorAll('.calc-tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    renderCalc(activeDienst);
+  });
+
+  renderCalc('zonnepanelen');
+</script>
+
+<script>
+
+// ── Navbar scroll effect ──
+const navbar = document.getElementById('navbar');
+if(navbar) {
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 20);
+  }, { passive: true });
+}
+
+// ── Nav dropdowns ──
+(function() {
+  var dropdowns = document.querySelectorAll('.dropdown');
+  dropdowns.forEach(function(dd) {
+    var menu = dd.querySelector('.dropdown-menu');
+    var arrow = dd.querySelector('.dropdown-arrow');
+    var timer;
+    if (!menu) return;
+    function open() {
+      clearTimeout(timer);
+      dropdowns.forEach(function(other) {
+        if (other !== dd) {
+          var m = other.querySelector('.dropdown-menu');
+          var a = other.querySelector('.dropdown-arrow');
+          if (m) m.classList.remove('show');
+          if (a) a.classList.remove('open');
+        }
+      });
+      menu.classList.add('show');
+      if (arrow) arrow.classList.add('open');
+    }
+    function close() {
+      timer = setTimeout(function() {
+        menu.classList.remove('show');
+        if (arrow) arrow.classList.remove('open');
+      }, 150);
+    }
+    dd.addEventListener('mouseenter', open);
+    dd.addEventListener('mouseleave', close);
+    menu.addEventListener('mouseenter', function() { clearTimeout(timer); });
+    menu.addEventListener('mouseleave', close);
+    var trigger = dd.querySelector('.nav-link');
+    if (trigger) {
+      trigger.addEventListener('click', function(e) {
+        if (window.innerWidth < 768) {
+          e.preventDefault();
+          dd.classList.toggle('mobile-open');
+        }
+      });
+    }
+  });
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.dropdown')) {
+      dropdowns.forEach(function(dd) {
+        var m = dd.querySelector('.dropdown-menu');
+        var a = dd.querySelector('.dropdown-arrow');
+        if (m) m.classList.remove('show');
+        if (a) a.classList.remove('open');
+      });
+    }
+  });
+})();
+
+// ── Hamburger menu ──
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+if(hamburger && mobileMenu) {
+  let menuOpen = false;
+  hamburger.addEventListener('click', () => {
+    menuOpen = !menuOpen;
+    mobileMenu.style.display = menuOpen ? 'flex' : 'none';
+    const spans = hamburger.querySelectorAll('span');
+    if (menuOpen) {
+      spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+      spans[1].style.opacity = '0';
+      spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
+    } else {
+      spans.forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
+    }
+  });
+  mobileMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      menuOpen = false;
+      mobileMenu.style.display = 'none';
+      hamburger.querySelectorAll('span').forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
+    });
+  });
+}
+
+</script>
+</body>
+</html>
